@@ -1,8 +1,9 @@
 export type USSDCodeType = {
     id: number
     mobileOperator: MobileOperatorType
-    title: string
+    service: string
     value: string
+    description: string
 }
 
 export type MobileOperatorType = 'ORANGE' | 'MOOV' | 'MTN'

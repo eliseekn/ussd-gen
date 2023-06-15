@@ -19,17 +19,17 @@ const App: React.FC = () => {
                 <Stack.Screen
                     name="Home"
                     component={HomeScreen}
-                    options={{title: 'Accueil'}}
+                    options={{title: 'Historique des codes USSD'}}
                 />
                 <Stack.Screen
                     name="Service"
                     component={ServiceScreen}
-                    options={{title: 'Générer un code USSD - Etape 1'}}
+                    options={{title: 'Générer un code USSD'}}
                 />
                 <Stack.Screen
                     name="Generator"
                     component={ServiceScreen}
-                    options={{title: 'Générer un code USSD - Etape 2'}}
+                    options={{title: 'Générer un code USSD'}}
                 />
             </Stack.Navigator>
         </NavigationContainer>

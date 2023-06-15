@@ -18,12 +18,12 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
                 {data.mobileOperator}
             </List.Subheader>
             <List.Item
-                style={{borderBottomWidth: 0.8, paddingVertical: 10}}
-                title={data.title}
+                style={{borderBottomWidth: 0.8, paddingVertical: 8}}
+                title={data.service + ' - ' + data.description}
                 titleNumberOfLines={2}
-                titleStyle={{fontSize: 18}}
+                titleStyle={{fontSize: 15}}
                 description={data.value}
-                descriptionStyle={{fontSize: 16}}
+                descriptionStyle={{fontSize: 15}}
                 left={props => <List.Icon {...props} icon="cellphone-text" />}
                 right={props => {
                     return (
