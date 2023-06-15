@@ -1,61 +1,59 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {List} from 'react-native-paper'
 import {USSDCodeType} from '../../interfaces'
 import {TouchableOpacity, View} from 'react-native'
+import {Menu} from 'react-native-paper'
 
 type Props = {
     data: USSDCodeType
 }
 
 const USSDCodeItem: React.FC<Props> = ({data}) => {
+    const [visible, setVisible] = useState<boolean>(false)
+    const toggleMenu = () => setVisible(!visible)
+
     return (
         <View>
             <List.Subheader style={{marginVertical: 0, paddingBottom: 0}}>
                 {data.mobileOperator}
             </List.Subheader>
             <List.Item
-                style={{borderBottomWidth: 0.5, paddingVertical: 15}}
+                style={{borderBottomWidth: 0.8, paddingVertical: 10}}
                 title={data.title}
                 titleNumberOfLines={2}
-                titleStyle={{marginBottom: 5, fontSize: 18}}
+                titleStyle={{fontSize: 18}}
                 description={data.value}
-                left={props => (
-                    <List.Icon
-                        {...props}
-                        icon="cellphone-text"
-                        style={{marginHorizontal: 0}}
-                    />
-                )}
+                descriptionStyle={{fontSize: 16}}
+                left={props => <List.Icon {...props} icon="cellphone-text" />}
                 right={props => {
                     return (
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                            }}>
-                            <TouchableOpacity>
-                                <List.Icon
-                                    {...props}
-                                    icon="content-copy"
-                                    style={{marginLeft: 1, marginRight: 0}}
-                                />
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <List.Icon
-                                    {...props}
-                                    icon="pencil-outline"
-                                    style={{marginHorizontal: 1}}
-                                />
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <List.Icon
-                                    {...props}
-                                    icon="trash-can-outline"
-                                    style={{marginLeft: 1, marginRight: 0}}
-                                />
-                            </TouchableOpacity>
-                        </View>
+                        <Menu
+                            visible={visible}
+                            onDismiss={toggleMenu}
+                            anchor={
+                                <TouchableOpacity onPress={toggleMenu}>
+                                    <List.Icon
+                                        {...props}
+                                        icon="dots-vertical"
+                                    />
+                                </TouchableOpacity>
+                            }>
+                            <Menu.Item
+                                leadingIcon="content-copy"
+                                onPress={() => {}}
+                                title="Copier"
+                            />
+                            <Menu.Item
+                                leadingIcon="pencil-outline"
+                                onPress={() => {}}
+                                title="Modifier"
+                            />
+                            <Menu.Item
+                                leadingIcon="trash-can-outline"
+                                onPress={() => {}}
+                                title="Supprimer"
+                            />
+                        </Menu>
                     )
                 }}
             />

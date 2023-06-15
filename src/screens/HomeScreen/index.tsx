@@ -5,10 +5,6 @@ import {USSDCodeType} from '../../interfaces'
 import USSDCodeItem from '../../components/USSDCodeItem'
 import {FAB, Text} from 'react-native-paper'
 
-type Props = {
-    data: USSDCodeType[]
-}
-
 const history: USSDCodeType[] = [
     {
         id: 1,
@@ -86,7 +82,7 @@ const HomeScreen: React.FC = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text variant="titleLarge" style={{marginBottom: 15}}>
+            <Text variant="titleLarge" style={{marginBottom: 20}}>
                 Historique des codes USSD
             </Text>
 
@@ -95,8 +91,8 @@ const HomeScreen: React.FC = () => {
                 renderItem={({item}: {item: USSDCodeType}) => (
                     <USSDCodeItem data={item} />
                 )}
-                // keyExtractor={item => item.id as string}
-                initialNumToRender={7}
+                keyExtractor={item => 'key' + item.id}
+                initialNumToRender={5}
                 showsVerticalScrollIndicator={false}
             />
 
