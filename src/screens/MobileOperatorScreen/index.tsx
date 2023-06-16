@@ -10,7 +10,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Service'>
 
 const MobileOperatorScreen: React.FC = () => {
     const navigation = useNavigation<NavigationProp>()
-    
+
     const [mobileOperatorModalVisible, setMobileOperatorModalVisible] =
         useState<boolean>(false)
     const [serviceModalVisible, setServiceModalVisible] =
@@ -126,7 +126,12 @@ const MobileOperatorScreen: React.FC = () => {
                     flexDirection: 'row-reverse',
                 }}
                 uppercase={true}
-                onPress={() => navigation.navigate('Service', {mobileOperator: mobileOperator, service: service})}>
+                onPress={() =>
+                    navigation.navigate('Service', {
+                        mobileOperator: mobileOperator,
+                        service: service,
+                    })
+                }>
                 Suivant
             </Button>
         </SafeAreaView>

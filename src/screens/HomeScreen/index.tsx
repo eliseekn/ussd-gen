@@ -7,7 +7,10 @@ import {FAB} from 'react-native-paper'
 import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import {useNavigation} from '@react-navigation/native'
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'MobileOperator'>
+type NavigationProp = NativeStackNavigationProp<
+    RootStackParamList,
+    'MobileOperator'
+>
 
 const history: USSDCodeType[] = [
     {

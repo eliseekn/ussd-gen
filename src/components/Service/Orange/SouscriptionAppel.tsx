@@ -1,47 +1,84 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {View} from 'react-native'
 import {Button, Text, Dialog, Portal, RadioButton} from 'react-native-paper'
+import PassMix from './PassMix'
+import PassKdo from './PassKdo'
+import {NativeStackNavigationProp} from '@react-navigation/native-stack'
+import {useNavigation} from '@react-navigation/native'
+import {RootStackParamList} from '../../../interfaces'
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Service'>
 
 const SouscriptionAppel: React.FC = () => {
+    const navigation = useNavigation<NavigationProp>()
+    const [pass, setPass] = useState<string>('MIX')
+    const [passVisible, setPassModalVisible] = useState<boolean>(false)
+
+    const togglePassModal = () => setPassModalVisible(!passVisible)
+
     return (
         <View>
-            <Text variant="bodyLarge" style={{marginBottom: 5}}>
-                Sélectionnez un pass
-            </Text>
+            <View>
+                <Text variant="bodyLarge" style={{marginBottom: 5}}>
+                    Sélectionnez un PASS
+                </Text>
 
-            <Button
-                mode="outlined"
-                icon="arrow-down-drop-circle-outline"
-                contentStyle={{
-                    flexDirection: 'row-reverse',
+                <Button
+                    mode="outlined"
+                    icon="arrow-down-drop-circle-outline"
+                    contentStyle={{
+                        flexDirection: 'row-reverse',
+                        justifyContent: 'space-between',
+                    }}
+                    onPress={togglePassModal}>
+                    {pass}
+                </Button>
+
+                <Portal>
+                    <Dialog visible={passVisible} onDismiss={togglePassModal}>
+                        <Dialog.Title>PASS</Dialog.Title>
+                        <Dialog.Content>
+                            <RadioButton.Group
+                                onValueChange={value => {
+                                    setPass(value)
+                                    togglePassModal()
+                                }}
+                                value={pass}>
+                                <RadioButton.Item label="MIX" value="MIX" />
+                                <RadioButton.Item label="KDO" value="KDO" />
+                            </RadioButton.Group>
+                        </Dialog.Content>
+                    </Dialog>
+                </Portal>
+            </View>
+
+            {pass === 'MIX' && <PassMix />}
+            {pass === 'KDO' && <PassKdo />}
+
+            <View
+                style={{
+                    marginTop: 20,
+                    flexDirection: 'row',
                     justifyContent: 'space-between',
-                }}
-                onPress={toggleMobileOperatorModal}>
-                {mobileOperator}
-            </Button>
+                }}>
+                <Button
+                    style={{width: 180}}
+                    mode="contained"
+                    icon="arrow-left"
+                    uppercase={true}
+                    onPress={() => navigation.navigate('MobileOperator')}>
+                    Précédent
+                </Button>
 
-            <Portal>
-                <Dialog
-                    visible={mobileOperatorModalVisible}
-                    onDismiss={toggleMobileOperatorModal}>
-                    <Dialog.Title>Opérateur mobile</Dialog.Title>
-                    <Dialog.Content>
-                        <RadioButton.Group
-                            onValueChange={value => {
-                                setMobileOperator(value)
-                                toggleMobileOperatorModal()
-                            }}
-                            value={mobileOperator}>
-                            <RadioButton.Item
-                                label="ORANGE"
-                                value="ORANGE"
-                            />
-                            <RadioButton.Item label="MTN" value="MTN" />
-                            <RadioButton.Item label="MOOV" value="MOOV" />
-                        </RadioButton.Group>
-                    </Dialog.Content>
-                </Dialog>
-            </Portal>
+                <Button
+                    style={{width: 180}}
+                    mode="contained"
+                    icon="content-save"
+                    uppercase={true}
+                    onPress={() => {}}>
+                    Générer
+                </Button>
+            </View>
         </View>
     )
 }

@@ -4,7 +4,7 @@ import {SafeAreaView, ScrollView} from 'react-native'
 import {useRoute} from '@react-navigation/native'
 import {RootStackParamList} from '../../interfaces'
 import type {RouteProp} from '@react-navigation/native'
-import {Text} from 'react-native-paper'
+import SouscriptionAppel from '../../components/Service/Orange/SouscriptionAppel'
 
 type Props = RouteProp<RootStackParamList, 'Service'>
 
@@ -16,7 +16,8 @@ const ServiceScreen: React.FC = () => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                {(mobileOperator === 'ORANGE' && service === 'SOUSCRIPTION APPEL') && <Text>Hello</Text>}
+                {mobileOperator === 'ORANGE' &&
+                    service === 'SOUSCRIPTION APPEL' && <SouscriptionAppel />}
             </ScrollView>
         </SafeAreaView>
     )
