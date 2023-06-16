@@ -10,6 +10,6 @@ export type MobileOperatorType = 'ORANGE' | 'MOOV' | 'MTN'
 
 export type RootStackParamList = {
     Home: undefined
-    Service: undefined
-    Generator: {mobileOperator: string; service: string}
+    MobileOperator: undefined
+    Service: {mobileOperator: string; service: string}
 }

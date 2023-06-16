@@ -7,7 +7,7 @@ import {FAB} from 'react-native-paper'
 import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import {useNavigation} from '@react-navigation/native'
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Service'>
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'MobileOperator'>
 
 const history: USSDCodeType[] = [
     {
@@ -69,13 +69,8 @@ const HomeScreen: React.FC = () => {
 
             <FAB
                 icon="plus"
-                style={{
-                    position: 'absolute',
-                    margin: 16,
-                    right: 0,
-                    bottom: 0,
-                }}
-                onPress={() => navigation.navigate('Service')}
+                style={{position: 'absolute', margin: 16, right: 0, bottom: 0}}
+                onPress={() => navigation.navigate('MobileOperator')}
             />
         </SafeAreaView>
     )
