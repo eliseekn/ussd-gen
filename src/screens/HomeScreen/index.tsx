@@ -15,8 +15,8 @@ type NavigationProp = NativeStackNavigationProp<
 >
 
 const HomeScreen: React.FC = () => {
-    const navigation = useNavigation<NavigationProp>()
-    const data = useAppSelector<USSDCodeType[]>(
+    const navigation: NavigationProp = useNavigation<NavigationProp>()
+    const data: USSDCodeType[] = useAppSelector<USSDCodeType[]>(
         (state: RootState) => state.USSDCode,
     )
 
@@ -27,7 +27,7 @@ const HomeScreen: React.FC = () => {
                 renderItem={({item}: {item: USSDCodeType}) => (
                     <USSDCodeItem data={item} />
                 )}
-                keyExtractor={item => 'key' + item.id}
+                keyExtractor={item => 'key_' + item.id}
                 initialNumToRender={5}
                 showsVerticalScrollIndicator={false}
             />

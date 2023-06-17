@@ -1,5 +1,5 @@
-import PassMix from './Orange/PassMix'
-import PassKdo from './Orange/PassKdo'
+import SouscriptionAppel from './Orange/SouscriptionAppel'
+import SouscriptionInternet from './Orange/SouscriptionInternet'
 
 const CodeGenerator = (
     mobileOperator: string,
@@ -8,9 +8,12 @@ const CodeGenerator = (
     duration?: string,
 ): string => {
     if (mobileOperator === 'ORANGE') {
-        return service === 'MIX'
-            ? PassMix(duration as string, amount)
-            : PassKdo(amount)
+        switch (service) {
+            case 'SOUSCRIPTION APPEL':
+                return SouscriptionAppel(duration as string, amount)
+            case 'SOUSCRIPTION INTERNET':
+                return SouscriptionInternet(duration as string, amount)
+        }
     }
 
     return ''

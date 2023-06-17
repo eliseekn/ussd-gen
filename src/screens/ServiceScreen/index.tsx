@@ -5,6 +5,7 @@ import {useRoute} from '@react-navigation/native'
 import {RootStackParamList} from '../../interfaces'
 import type {RouteProp} from '@react-navigation/native'
 import SouscriptionAppel from '../../components/Service/Orange/SouscriptionAppel'
+import SouscriptionInternet from '../../components/Service/Orange/SouscriptionInternet'
 
 type Props = RouteProp<RootStackParamList, 'Service'>
 
@@ -17,6 +18,9 @@ const ServiceScreen: React.FC = () => {
         <SafeAreaView style={styles.container}>
             {mobileOperator === 'ORANGE' &&
                 service === 'SOUSCRIPTION APPEL' && <SouscriptionAppel />}
+
+            {mobileOperator === 'ORANGE' &&
+                service === 'SOUSCRIPTION INTERNET' && <SouscriptionInternet />}
         </SafeAreaView>
     )
 }

@@ -1,46 +1,46 @@
-const PassMix = (duration: string, amount: string): string => {
-    let result: string = '#111*1*1'
+const SouscriptionInternet = (duration: string, amount: string): string => {
+    let result: string = '#111*1*2'
 
     if (duration === 'JOUR') {
-        result += '*1'
+        result += '*2'
 
         switch (amount) {
-            case '300 FCFA':
+            case '150 FCFA':
                 result += '*1'
                 break
             case '200 FCFA':
                 result += '*2'
                 break
-            default:
+            case '300 FCFA':
                 result += '*3'
+                break
+            default:
+                result += '*4'
                 break
         }
     }
 
     if (duration === 'SEMAINE') {
-        result += '*2'
+        result += '*3'
 
         switch (amount) {
-            case '1000 FCFA':
-                result += '*1'
-                break
             default:
-                result += '*2'
+                result += '*1'
                 break
         }
     }
 
     if (duration === 'MOIS') {
-        result += '*3'
+        result += '*4'
 
         switch (amount) {
-            case '20000 FCFA':
+            case '2500 FCFA':
                 result += '*1'
                 break
-            case '10000 FCFA':
+            case '5000 FCFA':
                 result += '*2'
                 break
-            case '5000 FCFA':
+            case '10000 FCFA':
                 result += '*3'
                 break
             default:
@@ -52,4 +52,4 @@ const PassMix = (duration: string, amount: string): string => {
     return result + '#'
 }
 
-export default PassMix
+export default SouscriptionInternet

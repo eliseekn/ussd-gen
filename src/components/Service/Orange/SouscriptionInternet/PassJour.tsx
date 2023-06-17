@@ -11,7 +11,7 @@ import {
 import {useAppDispatch} from '../../../../services/redux/hooks'
 import {setAmount} from '../../../../services/redux/reducers/amountReducer'
 
-const PassMixMois: React.FC = () => {
+const PassJour: React.FC = () => {
     const dispatch = useAppDispatch()
 
     const [amount, setTmpAmount] = useState<string>('')
@@ -53,20 +53,20 @@ const PassMixMois: React.FC = () => {
                             }}
                             value={amount}>
                             <RadioButton.Item
-                                label="3000 FCFA"
-                                value="3000 FCFA"
+                                label="150 FCFA"
+                                value="150 FCFA"
                             />
                             <RadioButton.Item
-                                label="5000 FCFA"
-                                value="5000 FCFA"
+                                label="200 FCFA"
+                                value="200 FCFA"
                             />
                             <RadioButton.Item
-                                label="10000 FCFA"
-                                value="10000 FCFA"
+                                label="300 FCFA"
+                                value="300 FCFA"
                             />
                             <RadioButton.Item
-                                label="20000 FCFA"
-                                value="20000 FCFA"
+                                label="500 FCFA"
+                                value="500 FCFA"
                             />
                         </RadioButton.Group>
                     </Dialog.Content>
@@ -76,4 +76,4 @@ const PassMixMois: React.FC = () => {
     )
 }
 
-export default PassMixMois
+export default PassJour
