@@ -1,7 +1,14 @@
 import React, {useState} from 'react'
 import {styles} from '../styles'
 import {SafeAreaView, View} from 'react-native'
-import {Button, Text, Dialog, Portal, RadioButton} from 'react-native-paper'
+import {
+    Button,
+    Text,
+    Dialog,
+    Portal,
+    RadioButton,
+    Divider,
+} from 'react-native-paper'
 import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import {useNavigation} from '@react-navigation/native'
 import {RootStackParamList} from '../../interfaces'
@@ -46,6 +53,7 @@ const MobileOperatorScreen: React.FC = () => {
                         visible={mobileOperatorModalVisible}
                         onDismiss={toggleMobileOperatorModal}>
                         <Dialog.Title>Opérateur mobile</Dialog.Title>
+                        <Divider />
                         <Dialog.Content>
                             <RadioButton.Group
                                 onValueChange={value => {
@@ -86,6 +94,7 @@ const MobileOperatorScreen: React.FC = () => {
                         visible={serviceModalVisible}
                         onDismiss={toggleServiceModal}>
                         <Dialog.Title>Service</Dialog.Title>
+                        <Divider />
                         <Dialog.Content>
                             <RadioButton.Group
                                 onValueChange={value => {
