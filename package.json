@@ -1,6 +1,16 @@
 {
   "name": "ussd-gen",
   "version": "0.0.1",
+  "description": "USSD code generator of Côte d'Ivoire mobile operator",
+  "author": {
+    "name": "N'Guessan K. Elisée",
+    "email": "eliseekn@gmail.com",
+    "url": "eliseekn@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eliseekn/ussd-gen"
+  },
   "private": true,
   "scripts": {
     "android": "react-native run-android",
