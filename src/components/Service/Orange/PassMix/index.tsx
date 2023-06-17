@@ -1,15 +1,31 @@
 import React, {useState} from 'react'
 import {View} from 'react-native'
-import {Button, Dialog, Portal, RadioButton, Text} from 'react-native-paper'
+import {
+    Button,
+    Dialog,
+    Divider,
+    Portal,
+    RadioButton,
+    Text,
+} from 'react-native-paper'
 import PassMixJour from './PassMixJour'
 import PassMixSemaine from './PassMixSemaine'
 import PassMixMois from './PassMixMois'
+import {useAppDispatch} from '../../../../services/redux/hooks'
+import {setDuration} from '../../../../services/redux/reducers/durationReducer'
 
 const PassMix: React.FC = () => {
-    const [duration, setDuration] = useState<string>('JOUR')
+    const dispatch = useAppDispatch()
+
+    const [duration, setTmpDuration] = useState<string>('')
     const [modalVisible, setModalVisible] = useState<boolean>(false)
 
     const toggleModal = () => setModalVisible(!modalVisible)
+
+    const handleSetDuration = (value: string) => {
+        setTmpDuration(value)
+        dispatch(setDuration(value))
+    }
 
     return (
         <View style={{marginTop: 15}}>
@@ -32,10 +48,11 @@ const PassMix: React.FC = () => {
                 <Portal>
                     <Dialog visible={modalVisible} onDismiss={toggleModal}>
                         <Dialog.Title>Durée</Dialog.Title>
+                        <Divider />
                         <Dialog.Content>
                             <RadioButton.Group
                                 onValueChange={value => {
-                                    setDuration(value)
+                                    handleSetDuration(value)
                                     toggleModal()
                                 }}
                                 value={duration}>

@@ -1,12 +1,28 @@
 import React, {useState} from 'react'
 import {View} from 'react-native'
-import {Button, Dialog, Portal, RadioButton, Text} from 'react-native-paper'
+import {
+    Button,
+    Dialog,
+    Divider,
+    Portal,
+    RadioButton,
+    Text,
+} from 'react-native-paper'
+import {useAppDispatch} from '../../../../services/redux/hooks'
+import {setAmount} from '../../../../services/redux/reducers/amountReducer'
 
 const PassMixSemaine: React.FC = () => {
-    const [amount, setAmount] = useState<string>('500 FCFA')
+    const dispatch = useAppDispatch()
+
+    const [amount, setTmpAmount] = useState<string>('')
     const [modalVisible, setModalVisible] = useState<boolean>(false)
 
     const toggleModal = () => setModalVisible(!modalVisible)
+
+    const handleSetAmount = (value: string) => {
+        setTmpAmount(value)
+        dispatch(setAmount(value))
+    }
 
     return (
         <View style={{marginTop: 15}}>
@@ -28,10 +44,11 @@ const PassMixSemaine: React.FC = () => {
             <Portal>
                 <Dialog visible={modalVisible} onDismiss={toggleModal}>
                     <Dialog.Title>Montant</Dialog.Title>
+                    <Divider />
                     <Dialog.Content>
                         <RadioButton.Group
                             onValueChange={value => {
-                                setAmount(value)
+                                handleSetAmount(value)
                                 toggleModal()
                             }}
                             value={amount}>
