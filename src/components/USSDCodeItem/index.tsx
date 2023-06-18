@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {List} from 'react-native-paper'
+import {List, MD3Colors} from 'react-native-paper'
 import {USSDCodeType} from '../../interfaces'
 import {TouchableOpacity, View} from 'react-native'
 import {Menu} from 'react-native-paper'
@@ -14,16 +14,18 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
 
     return (
         <View>
-            <List.Subheader style={{marginVertical: 0, paddingBottom: 0}}>
+            <List.Subheader
+                style={{
+                    marginVertical: 0,
+                    paddingBottom: 0,
+                    color: `${MD3Colors.primary40}`,
+                }}>
                 {data.mobileOperator}
             </List.Subheader>
             <List.Item
                 style={{borderBottomWidth: 0.5, paddingVertical: 5}}
                 title={data.service + ' - ' + data.description}
                 titleNumberOfLines={2}
-                titleStyle={{fontSize: 13.6}}
-                description={data.value}
-                descriptionStyle={{fontSize: 15}}
                 left={props => (
                     <List.Icon
                         {...props}
@@ -41,6 +43,7 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
                                     <List.Icon
                                         {...props}
                                         icon="dots-vertical"
+                                        color={MD3Colors.primary40}
                                     />
                                 </TouchableOpacity>
                             }>
@@ -48,11 +51,6 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
                                 leadingIcon="content-copy"
                                 onPress={() => {}}
                                 title="Copier"
-                            />
-                            <Menu.Item
-                                leadingIcon="pencil-outline"
-                                onPress={() => {}}
-                                title="Modifier"
                             />
                             <Menu.Item
                                 leadingIcon="trash-can-outline"

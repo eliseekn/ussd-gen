@@ -9,23 +9,24 @@ import {
     Divider,
     RadioButton,
 } from 'react-native-paper'
-import {NativeStackNavigationProp} from '@react-navigation/native-stack'
-import {useNavigation} from '@react-navigation/native'
-import {RootStackParamList, USSDCodeType} from '../../../../interfaces'
-import {CodeGenerator} from '../../../../utils'
+import {USSDCodeType} from '../../../../interfaces'
+import {generateUSSDCode, copyToClipboard} from '../../../../utils'
 import {useAppDispatch, useAppSelector} from '../../../../services/redux/hooks'
 import {RootState} from '../../../../services/redux/store'
 import {addUSSDCode} from '../../../../services/redux/reducers/USSDCodeReducer'
-import Clipboard from '@react-native-clipboard/clipboard'
 import PassJour from './PassJour'
 import PassSemaine from './PassSemaine'
 import PassMois from './PassMois'
 import {setDuration} from '../../../../services/redux/reducers/durationReducer'
-
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Service'>
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import {STORAGE_KEY} from '../../../../const'
 
 const SouscriptionInternet: React.FC = () => {
     const dispatch = useAppDispatch()
+
+    const USSDCodes: USSDCodeType[] = useAppSelector<USSDCodeType[]>(
+        (state: RootState) => state.USSDCode,
+    )
 
     const duration: string = useAppSelector<string>(
         (state: RootState) => state.duration,
@@ -35,7 +36,6 @@ const SouscriptionInternet: React.FC = () => {
         (state: RootState) => state.amount,
     )
 
-    const navigation = useNavigation<NavigationProp>()
     const [alertModal, setAlertModal] = useState<boolean>(false)
     const [alert, setAlert] = useState<boolean>(false)
     const [alertMessage, setAlertMessage] = useState<string>('')
@@ -50,18 +50,26 @@ const SouscriptionInternet: React.FC = () => {
         dispatch(setDuration(value))
     }
 
-    const handleGenerateCode = () => {
-        const USSDCode: string = CodeGenerator(
+    const handleStoreData = async (): Promise<void> => {
+        try {
+            if (USSDCodes) {
+                await AsyncStorage.setItem(
+                    STORAGE_KEY,
+                    JSON.stringify(USSDCodes),
+                )
+            }
+        } catch (err) {}
+    }
+
+    const handleGenerateCode = (): void => {
+        const USSDCode: string = generateUSSDCode(
             'ORANGE',
             'SOUSCRIPTION INTERNET',
             amount,
             duration,
         )
-        setUSSDCodeId(USSDCodeId + 1)
 
-        const description: string = duration
-            ? duration + ' - ' + amount
-            : amount
+        setUSSDCodeId(USSDCodeId + 1)
 
         dispatch(
             addUSSDCode({
@@ -69,7 +77,7 @@ const SouscriptionInternet: React.FC = () => {
                 mobileOperator: 'ORANGE',
                 service: 'SOUSCRIPTION INTERNET',
                 value: USSDCode,
-                description: description,
+                description: duration ? duration + ' ' + amount : amount,
             } as USSDCodeType),
         )
 
@@ -78,8 +86,13 @@ const SouscriptionInternet: React.FC = () => {
     }
 
     const handleCopyToClipboard = () => {
-        Clipboard.setString(
-            CodeGenerator('ORANGE', 'SOUSCRIPTION INTERNET', amount, duration),
+        copyToClipboard(
+            generateUSSDCode(
+                'ORANGE',
+                'SOUSCRIPTION INTERNET',
+                amount,
+                duration,
+            ),
         )
         setAlertModal(false)
         toggleAlert()
@@ -141,27 +154,15 @@ const SouscriptionInternet: React.FC = () => {
                     {duration === 'MOIS' && <PassMois />}
                 </View>
 
-                <View
-                    style={{
-                        marginTop: 20,
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                    }}>
+                <View style={{marginTop: 20}}>
                     <Button
-                        style={{width: 180}}
-                        mode="contained"
-                        icon="arrow-left"
-                        uppercase={true}
-                        onPress={() => navigation.navigate('MobileOperator')}>
-                        Précédent
-                    </Button>
-
-                    <Button
-                        style={{width: 180}}
                         mode="contained"
                         icon="content-save"
                         uppercase={true}
-                        onPress={() => handleGenerateCode()}>
+                        onPress={() => {
+                            handleGenerateCode()
+                            handleStoreData()
+                        }}>
                         Générer
                     </Button>
 

@@ -3,8 +3,14 @@ import {USSDCodeType} from '../../../interfaces'
 
 export const USSDCode = createSlice({
     name: 'USSDCode',
-    initialState: [],
+    initialState: [] as USSDCodeType[],
     reducers: {
+        setUSSDCode(
+            state: USSDCodeType[],
+            action: PayloadAction<USSDCodeType[]>,
+        ) {
+            return action.payload
+        },
         addUSSDCode(
             state: USSDCodeType[],
             action: PayloadAction<USSDCodeType>,
@@ -13,11 +19,11 @@ export const USSDCode = createSlice({
         },
         removeUSSDCode(state, action: PayloadAction<number>) {
             return state.filter(
-                (state: USSDCodeType) => state.id !== action.payload,
+                (value: USSDCodeType) => value.id !== action.payload,
             )
         },
     },
 })
 
-export const {addUSSDCode, removeUSSDCode} = USSDCode.actions
+export const {setUSSDCode, addUSSDCode, removeUSSDCode} = USSDCode.actions
 export default USSDCode.reducer

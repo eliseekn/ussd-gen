@@ -1,7 +1,7 @@
 import SouscriptionAppel from './Orange/SouscriptionAppel'
 import SouscriptionInternet from './Orange/SouscriptionInternet'
 
-const CodeGenerator = (
+const generateUSSDCode = (
     mobileOperator: string,
     service: string,
     amount: string,
@@ -19,4 +19,4 @@ const CodeGenerator = (
     return ''
 }
 
-export default CodeGenerator
+export default generateUSSDCode
