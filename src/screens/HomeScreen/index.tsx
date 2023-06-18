@@ -56,7 +56,6 @@ const HomeScreen: React.FC = (): any => {
                 )}
                 keyExtractor={item => 'key_' + item.id}
                 initialNumToRender={5}
-                showsVerticalScrollIndicator={false}
             />
 
             <FAB

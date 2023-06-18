@@ -1,13 +1,6 @@
 import React, {useState} from 'react'
 import {View} from 'react-native'
-import {
-    Button,
-    Dialog,
-    Divider,
-    Portal,
-    RadioButton,
-    Text,
-} from 'react-native-paper'
+import {Button, Dialog, Portal, RadioButton, Text} from 'react-native-paper'
 import {useAppDispatch} from '../../../../services/redux/hooks'
 import {setAmount} from '../../../../services/redux/reducers/amountReducer'
 import {AMOUNT_OPTIONS} from '../../../../const'
@@ -45,8 +38,6 @@ const PassSemaine: React.FC = () => {
 
             <Portal>
                 <Dialog visible={modalVisible} onDismiss={toggleModal}>
-                    <Dialog.Title>Montant</Dialog.Title>
-                    <Divider />
                     <Dialog.Content>
                         <RadioButton.Group
                             onValueChange={value => {

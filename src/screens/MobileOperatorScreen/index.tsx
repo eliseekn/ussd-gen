@@ -1,23 +1,20 @@
 import React, {useState} from 'react'
 import {styles} from '../styles'
 import {SafeAreaView, View} from 'react-native'
-import {
-    Button,
-    Text,
-    Dialog,
-    Portal,
-    RadioButton,
-    Divider,
-} from 'react-native-paper'
+import {Button, Text, Dialog, Portal, RadioButton} from 'react-native-paper'
 import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import {useNavigation} from '@react-navigation/native'
 import {RootStackParamList} from '../../interfaces'
 import {MOBILE_OPERATOR_OPTIONS, SERVICE_OPTIONS} from '../../const'
+import {setAmount} from '../../services/redux/reducers/amountReducer'
+import {setDuration} from '../../services/redux/reducers/durationReducer'
+import {useAppDispatch} from '../../services/redux/hooks'
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Service'>
 
 const MobileOperatorScreen: React.FC = () => {
     const navigation = useNavigation<NavigationProp>()
+    const dispatch = useAppDispatch()
 
     const [mobileOperatorModalVisible, setMobileOperatorModalVisible] =
         useState<boolean>(false)
@@ -54,8 +51,6 @@ const MobileOperatorScreen: React.FC = () => {
                     <Dialog
                         visible={mobileOperatorModalVisible}
                         onDismiss={toggleMobileOperatorModal}>
-                        <Dialog.Title>Opérateur mobile</Dialog.Title>
-                        <Divider />
                         <Dialog.Content>
                             <RadioButton.Group
                                 onValueChange={(value: string) => {
@@ -101,8 +96,6 @@ const MobileOperatorScreen: React.FC = () => {
                     <Dialog
                         visible={serviceModalVisible}
                         onDismiss={toggleServiceModal}>
-                        <Dialog.Title>Service</Dialog.Title>
-                        <Divider />
                         <Dialog.Content>
                             <RadioButton.Group
                                 onValueChange={(value: string) => {
@@ -132,12 +125,15 @@ const MobileOperatorScreen: React.FC = () => {
                 icon="arrow-right"
                 contentStyle={{flexDirection: 'row-reverse'}}
                 uppercase={true}
-                onPress={() =>
+                onPress={() => {
+                    dispatch(setAmount(''))
+                    dispatch(setDuration(''))
+
                     navigation.navigate('Service', {
                         mobileOperator: mobileOperator,
                         service: service,
                     })
-                }>
+                }}>
                 Suivant
             </Button>
         </SafeAreaView>

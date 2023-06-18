@@ -1,13 +1,6 @@
 import React, {useState} from 'react'
 import {View} from 'react-native'
-import {
-    Button,
-    Text,
-    Dialog,
-    Portal,
-    Divider,
-    RadioButton,
-} from 'react-native-paper'
+import {Button, Text, Dialog, Portal, RadioButton} from 'react-native-paper'
 import {useAppDispatch, useAppSelector} from '../../../../services/redux/hooks'
 import {RootState} from '../../../../services/redux/store'
 import PassJour from './PassJour'
@@ -52,8 +45,6 @@ const SouscriptionAppel: React.FC = () => {
 
                 <Portal>
                     <Dialog visible={modalVisible} onDismiss={toggleModal}>
-                        <Dialog.Title>Durée</Dialog.Title>
-                        <Divider />
                         <Dialog.Content>
                             <RadioButton.Group
                                 onValueChange={(value: string) => {

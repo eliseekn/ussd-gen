@@ -13,6 +13,7 @@ import {useAppDispatch, useAppSelector} from '../../services/redux/hooks'
 import {RootState} from '../../services/redux/store'
 import {incrementUSSDCodeId} from '../../services/redux/reducers/USSDCodeIdReducer'
 import FactureCIE from '../../components/Service/Orange/FactureCIE'
+import FactureSODECIE from '../../components/Service/Orange/FactureSODECIE'
 
 type Props = RouteProp<RootStackParamList, 'Service'>
 
@@ -86,6 +87,10 @@ const ServiceScreen: React.FC = () => {
 
             {mobileOperator === 'ORANGE' && service === 'FACTURE CIE' && (
                 <FactureCIE />
+            )}
+
+            {mobileOperator === 'ORANGE' && service === 'FACTURE SODECIE' && (
+                <FactureSODECIE />
             )}
 
             <View style={{marginTop: 20}}>
