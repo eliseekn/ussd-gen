@@ -12,6 +12,7 @@ import {addUSSDCode} from '../../services/redux/reducers/USSDCodeReducer'
 import {useAppDispatch, useAppSelector} from '../../services/redux/hooks'
 import {RootState} from '../../services/redux/store'
 import {incrementUSSDCodeId} from '../../services/redux/reducers/USSDCodeIdReducer'
+import FactureCIE from '../../components/Service/Orange/FactureCIE'
 
 type Props = RouteProp<RootStackParamList, 'Service'>
 
@@ -82,6 +83,10 @@ const ServiceScreen: React.FC = () => {
 
             {mobileOperator === 'ORANGE' &&
                 service === 'SOUSCRIPTION INTERNET' && <SouscriptionInternet />}
+
+            {mobileOperator === 'ORANGE' && service === 'FACTURE CIE' && (
+                <FactureCIE />
+            )}
 
             <View style={{marginTop: 20}}>
                 <Button

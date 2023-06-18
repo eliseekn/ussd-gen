@@ -34,6 +34,7 @@ const PassSemaine: React.FC = () => {
             <Button
                 mode="outlined"
                 icon="arrow-down-drop-circle-outline"
+                style={{backgroundColor: 'white'}}
                 contentStyle={{
                     flexDirection: 'row-reverse',
                     justifyContent: 'space-between',

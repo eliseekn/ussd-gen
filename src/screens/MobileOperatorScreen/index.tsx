@@ -41,6 +41,7 @@ const MobileOperatorScreen: React.FC = () => {
                 <Button
                     mode="outlined"
                     icon="arrow-down-drop-circle-outline"
+                    style={{backgroundColor: 'white'}}
                     contentStyle={{
                         flexDirection: 'row-reverse',
                         justifyContent: 'space-between',
@@ -57,7 +58,7 @@ const MobileOperatorScreen: React.FC = () => {
                         <Divider />
                         <Dialog.Content>
                             <RadioButton.Group
-                                onValueChange={value => {
+                                onValueChange={(value: string) => {
                                     setMobileOperator(value)
                                     toggleMobileOperatorModal()
                                 }}
@@ -87,6 +88,7 @@ const MobileOperatorScreen: React.FC = () => {
                 <Button
                     mode="outlined"
                     icon="arrow-down-drop-circle-outline"
+                    style={{backgroundColor: 'white'}}
                     contentStyle={{
                         flexDirection: 'row-reverse',
                         justifyContent: 'space-between',
@@ -103,7 +105,7 @@ const MobileOperatorScreen: React.FC = () => {
                         <Divider />
                         <Dialog.Content>
                             <RadioButton.Group
-                                onValueChange={value => {
+                                onValueChange={(value: string) => {
                                     setService(value)
                                     toggleServiceModal()
                                 }}
