@@ -34,13 +34,25 @@ const NavigationBar = ({
 
     return (
         <Appbar.Header>
-            {back ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
+            {back ? (
+                <Appbar.BackAction
+                    onPress={navigation.goBack}
+                    color={MD3Colors.primary40}
+                />
+            ) : null}
             <Appbar.Content title={title} />
             {title === 'Historique des codes USSD' && (
                 <Appbar.Action
                     icon="trash-can-outline"
                     color={MD3Colors.primary40}
                     onPress={toggleModal}
+                />
+            )}
+            {title === 'Générer un code USSD' && (
+                <Appbar.Action
+                    icon="history"
+                    color={MD3Colors.primary40}
+                    onPress={() => navigation.navigate('Home')}
                 />
             )}
 

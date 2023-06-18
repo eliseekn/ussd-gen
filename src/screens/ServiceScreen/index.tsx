@@ -26,14 +26,17 @@ const ServiceScreen: React.FC = () => {
     const [alertModal, setAlertModal] = useState<boolean>(false)
     const [alert, setAlert] = useState<boolean>(false)
     const [alertMessage, setAlertMessage] = useState<string>('')
-    const [USSDCodeId, setUSSDCodeId] = useState<number>(1)
-
-    const toggleAlert = () => setAlert(!alert)
-    const toggleAlertModal = () => setAlertModal(!alert)
 
     const USSDCodes: USSDCodeType[] = useAppSelector<USSDCodeType[]>(
         (state: RootState) => state.USSDCode,
     )
+
+    const lastUSSDCodeId: number =
+        USSDCodes.length === 0 ? 0 : USSDCodes[USSDCodes.length - 1].id
+    const [USSDCodeId, setUSSDCodeId] = useState<number>(lastUSSDCodeId)
+
+    const toggleAlert = () => setAlert(!alert)
+    const toggleAlertModal = () => setAlertModal(!alert)
 
     const amount: string = useAppSelector<string>(
         (state: RootState) => state.amount,
@@ -62,6 +65,8 @@ const ServiceScreen: React.FC = () => {
             duration,
         )
 
+        setUSSDCodeId(USSDCodeId + 1)
+
         dispatch(
             addUSSDCode({
                 id: USSDCodeId,
@@ -71,8 +76,6 @@ const ServiceScreen: React.FC = () => {
                 description: duration ? duration + ' ' + amount : amount,
             } as USSDCodeType),
         )
-
-        setUSSDCodeId((value: number) => value + 1)
 
         setAlertMessage('Code USSD : ' + USSDCode)
         setAlertModal(true)
@@ -114,6 +117,9 @@ const ServiceScreen: React.FC = () => {
                         <Dialog.Actions>
                             <Button onPress={handleCopyToClipboard}>
                                 COPIER
+                            </Button>
+                            <Button onPress={() => setAlertModal(false)}>
+                                OK
                             </Button>
                         </Dialog.Actions>
                     </Dialog>

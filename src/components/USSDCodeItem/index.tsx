@@ -1,16 +1,46 @@
 import React, {useState} from 'react'
-import {List, MD3Colors} from 'react-native-paper'
+import {Button, Dialog, List, MD3Colors, Portal, Text} from 'react-native-paper'
 import {USSDCodeType} from '../../interfaces'
 import {TouchableOpacity, View} from 'react-native'
 import {Menu} from 'react-native-paper'
+import {copyToClipboard} from '../../utils'
+import {useAppDispatch, useAppSelector} from '../../services/redux/hooks'
+import {removeUSSDCode} from '../../services/redux/reducers/USSDCodeReducer'
+import {RootState} from '../../services/redux/store'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import {STORAGE_KEY} from '../../const'
 
 type Props = {
     data: USSDCodeType
 }
 
 const USSDCodeItem: React.FC<Props> = ({data}) => {
-    const [visible, setVisible] = useState<boolean>(false)
-    const toggleMenu = () => setVisible(!visible)
+    const dispatch = useAppDispatch()
+
+    const USSDCodes: USSDCodeType[] = useAppSelector<USSDCodeType[]>(
+        (state: RootState) => state.USSDCode,
+    )
+
+    const [alert, setAlert] = useState<boolean>(false)
+    const [menuVisible, setMenuVisible] = useState<boolean>(false)
+
+    const toggleMenu = () => setMenuVisible(!menuVisible)
+    const toggleAlert = () => setAlert(!alert)
+
+    const handleCopyToClipboard = (): void => copyToClipboard(data.value)
+
+    const handleDeleteUSSDCode = async (id: number): Promise<void> => {
+        dispatch(removeUSSDCode(id))
+
+        try {
+            if (USSDCodes) {
+                await AsyncStorage.setItem(
+                    STORAGE_KEY,
+                    JSON.stringify(USSDCodes),
+                )
+            }
+        } catch (err) {}
+    }
 
     return (
         <View>
@@ -23,7 +53,11 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
                 {data.mobileOperator}
             </List.Subheader>
             <List.Item
-                style={{borderBottomWidth: 0.5, paddingVertical: 5}}
+                style={{
+                    borderBottomWidth: 0.5,
+                    paddingVertical: 5,
+                    borderBottomColor: `${MD3Colors.primary40}`,
+                }}
                 title={data.service + ' - ' + data.description}
                 titleNumberOfLines={2}
                 left={props => (
@@ -36,7 +70,7 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
                 right={props => {
                     return (
                         <Menu
-                            visible={visible}
+                            visible={menuVisible}
                             onDismiss={toggleMenu}
                             anchor={
                                 <TouchableOpacity onPress={toggleMenu}>
@@ -49,18 +83,44 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
                             }>
                             <Menu.Item
                                 leadingIcon="content-copy"
-                                onPress={() => {}}
+                                onPress={() => {
+                                    handleCopyToClipboard()
+                                    toggleMenu()
+                                }}
                                 title="Copier"
                             />
                             <Menu.Item
                                 leadingIcon="trash-can-outline"
-                                onPress={() => {}}
+                                onPress={() => {
+                                    toggleAlert()
+                                    toggleMenu()
+                                }}
                                 title="Supprimer"
                             />
                         </Menu>
                     )
                 }}
             />
+
+            <Portal>
+                <Dialog visible={alert} onDismiss={toggleAlert}>
+                    <Dialog.Content>
+                        <Text variant="bodyLarge">
+                            Etes-vous sûr de vouloir supprimer ce code USSD ?
+                        </Text>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={toggleAlert}>Annuler</Button>
+                        <Button
+                            onPress={() => {
+                                toggleAlert()
+                                handleDeleteUSSDCode(data.id)
+                            }}>
+                            Oui, supprimer
+                        </Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
         </View>
     )
 }
