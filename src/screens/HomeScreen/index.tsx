@@ -11,6 +11,7 @@ import {RootState} from '../../services/redux/store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {setUSSDCode} from '../../services/redux/reducers/USSDCodeReducer'
 import {STORAGE_KEY} from '../../const'
+import {setUSSCodeId} from '../../services/redux/reducers/USSDCodeIdReducer'
 
 type NavigationProp = NativeStackNavigationProp<
     RootStackParamList,
@@ -25,18 +26,25 @@ const HomeScreen: React.FC = (): any => {
         (state: RootState) => state.USSDCode,
     )
 
-    const getUSSDCodes = async (): Promise<void> => {
+    const getUSSDCodes = async (): Promise<USSDCodeType[] | undefined> => {
         try {
             const data: string | null = await AsyncStorage.getItem(STORAGE_KEY)
 
             if (data !== null) {
-                dispatch(setUSSDCode(JSON.parse(data)))
+                const d: USSDCodeType[] = JSON.parse(data) as USSDCodeType[]
+                dispatch(setUSSDCode(d))
+                return d
             }
         } catch (err) {}
     }
 
+    const getLastUSSDCodeId = (data: USSDCodeType[]): void => {
+        const id: number = data.length === 0 ? 0 : data[0].id
+        dispatch(setUSSCodeId(id + 1))
+    }
+
     useEffect(() => {
-        getUSSDCodes()
+        getUSSDCodes().then(data => getLastUSSDCodeId(data as USSDCodeType[]))
     }, [])
 
     return (
@@ -53,12 +61,7 @@ const HomeScreen: React.FC = (): any => {
 
             <FAB
                 icon="plus"
-                style={{
-                    position: 'absolute',
-                    margin: 16,
-                    right: 0,
-                    bottom: 0,
-                }}
+                style={{position: 'absolute', margin: 16, right: 0, bottom: 0}}
                 onPress={() => navigation.navigate('MobileOperator')}
             />
         </SafeAreaView>

@@ -33,6 +33,7 @@ const AMOUNT_OPTIONS: Props[] = [
 ]
 
 const MOBILE_OPERATOR_OPTIONS: string[] = ['ORANGE', 'MTN', 'MOOV']
+
 const SERVICE_OPTIONS: string[] = [
     'SOUSCRIPTION APPEL',
     'SOUSCRIPTION INTERNET',

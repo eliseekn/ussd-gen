@@ -7,17 +7,20 @@ import type {RouteProp} from '@react-navigation/native'
 import SouscriptionAppel from '../../components/Service/Orange/SouscriptionAppel'
 import SouscriptionInternet from '../../components/Service/Orange/SouscriptionInternet'
 import {Button, Dialog, Portal, Snackbar, Text} from 'react-native-paper'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import {STORAGE_KEY} from '../../const'
 import {copyToClipboard, generateUSSDCode} from '../../utils'
 import {addUSSDCode} from '../../services/redux/reducers/USSDCodeReducer'
 import {useAppDispatch, useAppSelector} from '../../services/redux/hooks'
 import {RootState} from '../../services/redux/store'
+import {incrementUSSDCodeId} from '../../services/redux/reducers/USSDCodeIdReducer'
 
 type Props = RouteProp<RootStackParamList, 'Service'>
 
 const ServiceScreen: React.FC = () => {
     const dispatch = useAppDispatch()
+
+    const USSDCodeId: number = useAppSelector<number>(
+        (state: RootState) => state.USSDCodeId,
+    )
 
     const route = useRoute<Props>()
     const mobileOperator: string = route.params.mobileOperator
@@ -26,14 +29,6 @@ const ServiceScreen: React.FC = () => {
     const [alertModal, setAlertModal] = useState<boolean>(false)
     const [alert, setAlert] = useState<boolean>(false)
     const [alertMessage, setAlertMessage] = useState<string>('')
-
-    const USSDCodes: USSDCodeType[] = useAppSelector<USSDCodeType[]>(
-        (state: RootState) => state.USSDCode,
-    )
-
-    const lastUSSDCodeId: number =
-        USSDCodes.length === 0 ? 0 : USSDCodes[USSDCodes.length - 1].id
-    const [USSDCodeId, setUSSDCodeId] = useState<number>(lastUSSDCodeId)
 
     const toggleAlert = () => setAlert(!alert)
     const toggleAlertModal = () => setAlertModal(!alert)
@@ -46,34 +41,25 @@ const ServiceScreen: React.FC = () => {
         (state: RootState) => state.duration,
     )
 
-    const handleStoreData = async (): Promise<void> => {
-        try {
-            if (USSDCodes) {
-                await AsyncStorage.setItem(
-                    STORAGE_KEY,
-                    JSON.stringify(USSDCodes),
-                )
-            }
-        } catch (err) {}
-    }
-
     const handleGenerateCode = (): void => {
         const USSDCode: string = generateUSSDCode(
-            'ORANGE',
-            'SOUSCRIPTION APPEL',
+            mobileOperator,
+            service,
             amount,
             duration,
         )
 
-        setUSSDCodeId(USSDCodeId + 1)
+        dispatch(incrementUSSDCodeId())
 
         dispatch(
             addUSSDCode({
                 id: USSDCodeId,
-                mobileOperator: 'ORANGE',
-                service: 'SOUSCRIPTION APPEL',
+                mobileOperator: mobileOperator,
+                service: service,
                 value: USSDCode,
-                description: duration ? duration + ' ' + amount : amount,
+                description: duration
+                    ? duration + '\n' + amount
+                    : '\n' + amount,
             } as USSDCodeType),
         )
 
@@ -83,7 +69,7 @@ const ServiceScreen: React.FC = () => {
 
     const handleCopyToClipboard = (): void => {
         copyToClipboard(
-            generateUSSDCode('ORANGE', 'SOUSCRIPTION APPEL', amount, duration),
+            generateUSSDCode(mobileOperator, service, amount, duration),
         )
         setAlertModal(false)
         toggleAlert()
@@ -102,10 +88,7 @@ const ServiceScreen: React.FC = () => {
                     mode="contained"
                     icon="content-save"
                     uppercase={true}
-                    onPress={() => {
-                        handleGenerateCode()
-                        handleStoreData()
-                    }}>
+                    onPress={handleGenerateCode}>
                     Générer
                 </Button>
 

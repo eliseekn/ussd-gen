@@ -4,11 +4,8 @@ import {USSDCodeType} from '../../interfaces'
 import {TouchableOpacity, View} from 'react-native'
 import {Menu} from 'react-native-paper'
 import {copyToClipboard} from '../../utils'
-import {useAppDispatch, useAppSelector} from '../../services/redux/hooks'
+import {useAppDispatch} from '../../services/redux/hooks'
 import {removeUSSDCode} from '../../services/redux/reducers/USSDCodeReducer'
-import {RootState} from '../../services/redux/store'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import {STORAGE_KEY} from '../../const'
 
 type Props = {
     data: USSDCodeType
@@ -16,10 +13,6 @@ type Props = {
 
 const USSDCodeItem: React.FC<Props> = ({data}) => {
     const dispatch = useAppDispatch()
-
-    const USSDCodes: USSDCodeType[] = useAppSelector<USSDCodeType[]>(
-        (state: RootState) => state.USSDCode,
-    )
 
     const [alert, setAlert] = useState<boolean>(false)
     const [menuVisible, setMenuVisible] = useState<boolean>(false)
@@ -29,17 +22,8 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
 
     const handleCopyToClipboard = (): void => copyToClipboard(data.value)
 
-    const handleDeleteUSSDCode = async (id: number): Promise<void> => {
+    const handleDeleteUSSDCode = (id: number): void => {
         dispatch(removeUSSDCode(id))
-
-        try {
-            if (USSDCodes) {
-                await AsyncStorage.setItem(
-                    STORAGE_KEY,
-                    JSON.stringify(USSDCodes),
-                )
-            }
-        } catch (err) {}
     }
 
     return (
@@ -61,11 +45,7 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
                 title={data.service + ' - ' + data.description}
                 titleNumberOfLines={2}
                 left={props => (
-                    <List.Icon
-                        {...props}
-                        icon="cellphone-text"
-                        style={{margin: 0}}
-                    />
+                    <List.Icon {...props} icon="dialpad" style={{margin: 0}} />
                 )}
                 right={props => {
                     return (

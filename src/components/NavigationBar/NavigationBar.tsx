@@ -12,6 +12,7 @@ import {NativeStackHeaderProps} from '@react-navigation/native-stack'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {useAppDispatch} from '../../services/redux/hooks'
 import {setUSSDCode} from '../../services/redux/reducers/USSDCodeReducer'
+import {STORAGE_KEY} from '../../const'
 
 const NavigationBar = ({
     navigation,
@@ -27,7 +28,7 @@ const NavigationBar = ({
 
     const clearHistory = async (): Promise<void> => {
         try {
-            await AsyncStorage.clear()
+            await AsyncStorage.removeItem(STORAGE_KEY)
             dispatch(setUSSDCode([]))
         } catch (e) {}
     }

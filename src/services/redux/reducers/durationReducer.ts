@@ -4,7 +4,7 @@ export const durationSlice = createSlice({
     name: 'duration',
     initialState: '',
     reducers: {
-        setDuration(state, action: PayloadAction<string>) {
+        setDuration(state, action: PayloadAction<string>): string {
             return action.payload
         },
     },
