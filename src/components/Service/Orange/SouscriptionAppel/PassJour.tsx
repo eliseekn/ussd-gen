@@ -10,6 +10,7 @@ import {
 } from 'react-native-paper'
 import {useAppDispatch} from '../../../../services/redux/hooks'
 import {setAmount} from '../../../../services/redux/reducers/amountReducer'
+import {AMOUNT_OPTIONS} from '../../../../const'
 
 const PassJour: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -52,18 +53,17 @@ const PassJour: React.FC = () => {
                                 toggleModal()
                             }}
                             value={amount}>
-                            <RadioButton.Item
-                                label="150 FCFA"
-                                value="150 FCFA"
-                            />
-                            <RadioButton.Item
-                                label="200 FCFA"
-                                value="200 FCFA"
-                            />
-                            <RadioButton.Item
-                                label="300 FCFA"
-                                value="300 FCFA"
-                            />
+                            {AMOUNT_OPTIONS[0].APPEL[0].JOUR.map(
+                                (value: string, i: number) => {
+                                    return (
+                                        <RadioButton.Item
+                                            key={i}
+                                            label={value}
+                                            value={value}
+                                        />
+                                    )
+                                },
+                            )}
                         </RadioButton.Group>
                     </Dialog.Content>
                 </Dialog>

@@ -12,6 +12,7 @@ import {
 import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import {useNavigation} from '@react-navigation/native'
 import {RootStackParamList} from '../../interfaces'
+import {MOBILE_OPERATOR_OPTIONS, SERVICE_OPTIONS} from '../../const'
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Service'>
 
@@ -61,12 +62,17 @@ const MobileOperatorScreen: React.FC = () => {
                                     toggleMobileOperatorModal()
                                 }}
                                 value={mobileOperator}>
-                                <RadioButton.Item
-                                    label="ORANGE"
-                                    value="ORANGE"
-                                />
-                                <RadioButton.Item label="MTN" value="MTN" />
-                                <RadioButton.Item label="MOOV" value="MOOV" />
+                                {MOBILE_OPERATOR_OPTIONS.map(
+                                    (value: string, i: number) => {
+                                        return (
+                                            <RadioButton.Item
+                                                key={i}
+                                                label={value}
+                                                value={value}
+                                            />
+                                        )
+                                    },
+                                )}
                             </RadioButton.Group>
                         </Dialog.Content>
                     </Dialog>
@@ -102,26 +108,17 @@ const MobileOperatorScreen: React.FC = () => {
                                     toggleServiceModal()
                                 }}
                                 value={service}>
-                                <RadioButton.Item
-                                    label="SOUSCRIPTION APPEL"
-                                    value="SOUSCRIPTION APPEL"
-                                />
-                                <RadioButton.Item
-                                    label="SOUSCRIPTION INTERNET"
-                                    value="SOUSCRIPTION INTERNET"
-                                />
-                                <RadioButton.Item
-                                    label="FACTURE CIE"
-                                    value="FACTURE CIE"
-                                />
-                                <RadioButton.Item
-                                    label="FACTURE SODECIE"
-                                    value="FACTURE SODECIE"
-                                />
-                                <RadioButton.Item
-                                    label="REABONNEMENT CANAL+"
-                                    value="REABONNEMENT CANAL+"
-                                />
+                                {SERVICE_OPTIONS.map(
+                                    (value: string, i: number) => {
+                                        return (
+                                            <RadioButton.Item
+                                                key={i}
+                                                label={value}
+                                                value={value}
+                                            />
+                                        )
+                                    },
+                                )}
                             </RadioButton.Group>
                         </Dialog.Content>
                     </Dialog>

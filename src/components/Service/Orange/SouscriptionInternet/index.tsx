@@ -19,7 +19,7 @@ import PassSemaine from './PassSemaine'
 import PassMois from './PassMois'
 import {setDuration} from '../../../../services/redux/reducers/durationReducer'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import {STORAGE_KEY} from '../../../../const'
+import {DURATION_OPTIONS, STORAGE_KEY} from '../../../../const'
 
 const SouscriptionInternet: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -131,18 +131,17 @@ const SouscriptionInternet: React.FC = () => {
                                             toggleModal()
                                         }}
                                         value={duration}>
-                                        <RadioButton.Item
-                                            label="JOUR"
-                                            value="JOUR"
-                                        />
-                                        <RadioButton.Item
-                                            label="SEMAINE"
-                                            value="SEMAINE"
-                                        />
-                                        <RadioButton.Item
-                                            label="MOIS"
-                                            value="MOIS"
-                                        />
+                                        {DURATION_OPTIONS.map(
+                                            (value: string, i: number) => {
+                                                return (
+                                                    <RadioButton.Item
+                                                        key={i}
+                                                        label={value}
+                                                        value={value}
+                                                    />
+                                                )
+                                            },
+                                        )}
                                     </RadioButton.Group>
                                 </Dialog.Content>
                             </Dialog>
