@@ -128,9 +128,7 @@ const MobileOperatorScreen: React.FC = () => {
             <Button
                 mode="contained"
                 icon="arrow-right"
-                contentStyle={{
-                    flexDirection: 'row-reverse',
-                }}
+                contentStyle={{flexDirection: 'row-reverse'}}
                 uppercase={true}
                 onPress={() =>
                     navigation.navigate('Service', {
