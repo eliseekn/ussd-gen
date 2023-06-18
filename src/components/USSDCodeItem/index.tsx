@@ -44,9 +44,9 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
                 }}
                 title={data.service + ' - ' + data.description}
                 titleNumberOfLines={2}
-                left={props => (
-                    <List.Icon {...props} icon="dialpad" style={{margin: 0}} />
-                )}
+                // left={props => (
+                //     <List.Icon {...props} icon="dialpad" style={{margin: 0}} />
+                // )}
                 right={props => {
                     return (
                         <Menu

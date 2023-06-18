@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {styles} from '../styles'
 import {SafeAreaView, FlatList} from 'react-native'
 import {USSDCodeType, RootStackParamList} from '../../interfaces'
@@ -26,6 +26,8 @@ const HomeScreen: React.FC = (): any => {
         (state: RootState) => state.USSDCode,
     )
 
+    const [refreshing, setRefreshing] = useState<boolean>(false)
+
     const getUSSDCodes = async (): Promise<USSDCodeType[] | undefined> => {
         try {
             const data: string | null = await AsyncStorage.getItem(STORAGE_KEY)
@@ -43,8 +45,17 @@ const HomeScreen: React.FC = (): any => {
         dispatch(setUSSCodeId(id + 1))
     }
 
+    const handleOnRefreshing = (): void => {
+        setRefreshing(true)
+        setTimeout(() => setRefreshing(false), 1000)
+    }
+
     useEffect(() => {
-        getUSSDCodes().then(data => getLastUSSDCodeId(data as USSDCodeType[]))
+        getUSSDCodes().then(data => {
+            if (data) {
+                getLastUSSDCodeId(data as USSDCodeType[])
+            }
+        })
     }, [])
 
     return (
@@ -56,6 +67,8 @@ const HomeScreen: React.FC = (): any => {
                 )}
                 keyExtractor={item => 'key_' + item.id}
                 initialNumToRender={5}
+                refreshing={refreshing}
+                onRefresh={handleOnRefreshing}
             />
 
             <FAB
