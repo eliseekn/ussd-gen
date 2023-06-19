@@ -42,11 +42,11 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
                     paddingVertical: 5,
                     borderBottomColor: `${MD3Colors.primary40}`,
                 }}
-                title={data.service + ' - ' + data.description}
+                title={data.service + '\n' + data.description}
                 titleNumberOfLines={2}
-                // left={props => (
-                //     <List.Icon {...props} icon="dialpad" style={{margin: 0}} />
-                // )}
+                left={props => (
+                    <List.Icon {...props} icon="dialpad" style={{margin: 0}} />
+                )}
                 right={props => {
                     return (
                         <Menu

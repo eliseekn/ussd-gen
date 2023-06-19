@@ -18,14 +18,14 @@ const FactureSODECIE: React.FC = () => {
     }
 
     const handleSetAmount = (): void => {
-        dispatch(setAmount('- FCFA'))
+        dispatch(setAmount(''))
     }
 
     return (
         <View>
             <View>
                 <Text variant="bodyLarge" style={{marginBottom: 5}}>
-                    Numéro du compteur
+                    Numéro de compteur
                 </Text>
 
                 <TextInput
@@ -41,6 +41,7 @@ const FactureSODECIE: React.FC = () => {
                         handleSetAmount()
                     }}
                     maxLength={9}
+                    keyboardType="number-pad"
                 />
             </View>
         </View>

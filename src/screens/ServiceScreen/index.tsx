@@ -14,8 +14,31 @@ import {RootState} from '../../services/redux/store'
 import {incrementUSSDCodeId} from '../../services/redux/reducers/USSDCodeIdReducer'
 import FactureCIE from '../../components/Service/Orange/FactureCIE'
 import FactureSODECIE from '../../components/Service/Orange/FactureSODECIE'
+import ReabonnementCANAL from '../../components/Service/Orange/ReabonnementCANAL'
 
 type Props = RouteProp<RootStackParamList, 'Service'>
+
+const serviceComponent = (
+    mobileOperator: string,
+    service: string,
+): JSX.Element => {
+    if (mobileOperator === 'ORANGE') {
+        switch (service) {
+            case 'SOUSCRIPTION APPEL':
+                return <SouscriptionAppel />
+            case 'SOUSCRIPTION INTERNET':
+                return <SouscriptionInternet />
+            case 'FACTURE CIE':
+                return <FactureCIE />
+            case 'FACTURE SODECIE':
+                return <FactureSODECIE />
+            case 'REABONNEMENT CANAL+':
+                return <ReabonnementCANAL />
+        }
+    }
+
+    return <></>
+}
 
 const ServiceScreen: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -59,9 +82,7 @@ const ServiceScreen: React.FC = () => {
                 mobileOperator: mobileOperator,
                 service: service,
                 value: USSDCode,
-                description: duration
-                    ? duration + '\n' + amount
-                    : '\n' + amount,
+                description: duration ? duration + ' - ' + amount : amount,
             } as USSDCodeType),
         )
 
@@ -79,19 +100,7 @@ const ServiceScreen: React.FC = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            {mobileOperator === 'ORANGE' &&
-                service === 'SOUSCRIPTION APPEL' && <SouscriptionAppel />}
-
-            {mobileOperator === 'ORANGE' &&
-                service === 'SOUSCRIPTION INTERNET' && <SouscriptionInternet />}
-
-            {mobileOperator === 'ORANGE' && service === 'FACTURE CIE' && (
-                <FactureCIE />
-            )}
-
-            {mobileOperator === 'ORANGE' && service === 'FACTURE SODECIE' && (
-                <FactureSODECIE />
-            )}
+            {serviceComponent(mobileOperator, service)}
 
             <View style={{marginTop: 20}}>
                 <Button

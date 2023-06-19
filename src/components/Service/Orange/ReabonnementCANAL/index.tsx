@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {View} from 'react-native'
 import {Text, TextInput} from 'react-native-paper'
 import {useAppDispatch, useAppSelector} from '../../../../services/redux/hooks'
@@ -6,29 +6,26 @@ import {RootState} from '../../../../services/redux/store'
 import {setDuration} from '../../../../services/redux/reducers/durationReducer'
 import {setAmount} from '../../../../services/redux/reducers/amountReducer'
 
-const FactureCIE: React.FC = () => {
+const ReabonnementCANAL: React.FC = () => {
     const dispatch = useAppDispatch()
 
     const duration: string = useAppSelector<string>(
         (state: RootState) => state.duration,
     )
 
-    const [amount, setTmpAmount] = useState<string>('')
-
     const handleSetDuration = (value: string): void => {
         dispatch(setDuration(value))
     }
 
-    const handleSetAmount = (value: string) => {
-        setTmpAmount(value)
-        dispatch(setAmount(value + ' FCFA'))
+    const handleSetAmount = (): void => {
+        dispatch(setAmount(''))
     }
 
     return (
         <View>
             <View>
                 <Text variant="bodyLarge" style={{marginBottom: 5}}>
-                    Numéro de compteur
+                    Numéro de carte
                 </Text>
 
                 <TextInput
@@ -39,27 +36,16 @@ const FactureCIE: React.FC = () => {
                     }}
                     style={{backgroundColor: 'white'}}
                     value={duration}
-                    onChangeText={handleSetDuration}
-                    maxLength={9}
+                    onChangeText={(value: string) => {
+                        handleSetDuration(value)
+                        handleSetAmount()
+                    }}
+                    maxLength={14}
                     keyboardType="number-pad"
-                />
-            </View>
-
-            <View style={{marginTop: 15}}>
-                <Text variant="bodyLarge" style={{marginBottom: 5}}>
-                    Montant du rechargement
-                </Text>
-
-                <TextInput
-                    mode="outlined"
-                    outlineStyle={{borderRadius: 30, borderWidth: 0.8}}
-                    style={{backgroundColor: 'white'}}
-                    value={amount}
-                    onChangeText={handleSetAmount}
                 />
             </View>
         </View>
     )
 }
 
-export default FactureCIE
+export default ReabonnementCANAL

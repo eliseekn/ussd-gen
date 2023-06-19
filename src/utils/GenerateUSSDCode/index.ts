@@ -1,7 +1,7 @@
 import SouscriptionAppel from './Orange/SouscriptionAppel'
 import SouscriptionInternet from './Orange/SouscriptionInternet'
-import FactureCIE from './Orange/FactureCIE'
-import FactureSODECIE from './Orange/FactureSODECIE'
+import Facture from './Orange/Facture'
+import ReabonnementCANAL from './Orange/ReabonnementCANAL'
 
 const generateUSSDCode = (
     mobileOperator: string,
@@ -19,9 +19,10 @@ const generateUSSDCode = (
                     amount as string,
                 )
             case 'FACTURE CIE':
-                return FactureCIE(duration as string, amount as string)
             case 'FACTURE SODECIE':
-                return FactureSODECIE(duration as string)
+                return Facture(service, duration as string, amount as string)
+            case 'REABONNEMENT CANAL+':
+                return ReabonnementCANAL(duration as string)
         }
     }
 
