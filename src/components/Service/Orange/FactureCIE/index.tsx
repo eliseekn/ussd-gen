@@ -56,6 +56,7 @@ const FactureCIE: React.FC = () => {
                     style={{backgroundColor: 'white'}}
                     value={amount}
                     onChangeText={handleSetAmount}
+                    keyboardType="number-pad"
                 />
             </View>
         </View>

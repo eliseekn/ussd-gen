@@ -82,7 +82,7 @@ const ServiceScreen: React.FC = () => {
                 mobileOperator: mobileOperator,
                 service: service,
                 value: USSDCode,
-                description: duration ? duration + ' - ' + amount : amount,
+                description: amount ? duration + ' - ' + amount : duration,
             } as USSDCodeType),
         )
 

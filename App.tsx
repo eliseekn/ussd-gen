@@ -20,7 +20,7 @@ const App: React.FC = () => {
                 <Stack.Screen
                     name="Home"
                     component={HomeScreen}
-                    options={{title: 'Historique des codes USSD'}}
+                    options={{title: 'Historique des codes'}}
                 />
                 <Stack.Screen
                     name="MobileOperator"

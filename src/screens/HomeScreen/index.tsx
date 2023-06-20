@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import {setUSSDCode} from '../../services/redux/reducers/USSDCodeReducer'
 import {STORAGE_KEY} from '../../const'
 import {setUSSCodeId} from '../../services/redux/reducers/USSDCodeIdReducer'
+import SearchBar from '../../components/SearchBar'
 
 type NavigationProp = NativeStackNavigationProp<
     RootStackParamList,
@@ -26,6 +27,8 @@ const HomeScreen: React.FC = (): any => {
         (state: RootState) => state.USSDCode,
     )
 
+    const [searchQuery, setSearchQuery] = useState<string>('')
+    const [searchResult, setSearchResult] = useState<USSDCodeType[]>([])
     const [refreshing, setRefreshing] = useState<boolean>(false)
 
     const getUSSDCodes = async (): Promise<USSDCodeType[] | undefined> => {
@@ -58,10 +61,30 @@ const HomeScreen: React.FC = (): any => {
         })
     }, [])
 
+    const handleSearchQuery = (query: string): void => {
+        setSearchQuery(query)
+        setSearchResult(
+            USSDCodes.filter((code: USSDCodeType) => {
+                return (
+                    code.service.toLowerCase().indexOf(query.toLowerCase()) >=
+                        0 ||
+                    code.mobileOperator
+                        .toLowerCase()
+                        .indexOf(query.toLowerCase()) >= 0 ||
+                    code.description
+                        .toLowerCase()
+                        .indexOf(query.toLowerCase()) >= 0
+                )
+            }),
+        )
+    }
+
     return (
         <SafeAreaView style={styles.container}>
+            <SearchBar onSearch={handleSearchQuery} searchQuery={searchQuery} />
+
             <FlatList
-                data={USSDCodes}
+                data={searchQuery === '' ? USSDCodes : searchResult}
                 renderItem={({item}: {item: USSDCodeType}) => (
                     <USSDCodeItem data={item} />
                 )}

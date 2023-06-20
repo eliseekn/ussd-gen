@@ -42,7 +42,7 @@ const NavigationBar = ({
                 />
             ) : null}
             <Appbar.Content title={title} />
-            {title === 'Historique des codes USSD' && (
+            {title === 'Historique des codes' && (
                 <Appbar.Action
                     icon="trash-can-outline"
                     color={MD3Colors.primary40}
