@@ -81,7 +81,7 @@ const NavigationBar = ({
                     />
                 </Menu>
             )}
-            {title === 'Générer un code USSD' && (
+            {title === 'Générer un code' && (
                 <Appbar.Action
                     icon="history"
                     color={MD3Colors.primary40}

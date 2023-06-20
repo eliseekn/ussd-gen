@@ -25,12 +25,12 @@ const App: React.FC = () => {
                 <Stack.Screen
                     name="MobileOperator"
                     component={MobileOperatorScreen}
-                    options={{title: 'Générer un code USSD'}}
+                    options={{title: 'Générer un code'}}
                 />
                 <Stack.Screen
                     name="Service"
                     component={ServiceScreen}
-                    options={{title: 'Générer un code USSD'}}
+                    options={{title: 'Générer un code'}}
                 />
             </Stack.Navigator>
         </NavigationContainer>
