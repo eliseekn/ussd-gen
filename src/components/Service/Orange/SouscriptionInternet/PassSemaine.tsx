@@ -45,7 +45,7 @@ const PassSemaine: React.FC = () => {
                                 toggleModal()
                             }}
                             value={amount}>
-                            {AMOUNT_OPTIONS[0].INTERNET[0].SEMAINE.map(
+                            {AMOUNT_OPTIONS[0].ORANGE[0].INTERNET[0].SEMAINE.map(
                                 (value: string, i: number) => {
                                     return (
                                         <RadioButton.Item

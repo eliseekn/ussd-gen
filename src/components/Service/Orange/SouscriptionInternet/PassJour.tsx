@@ -45,7 +45,7 @@ const PassJour: React.FC = () => {
                                 toggleModal()
                             }}
                             value={amount}>
-                            {AMOUNT_OPTIONS[0].INTERNET[0].JOUR.map(
+                            {AMOUNT_OPTIONS[0].ORANGE[0].INTERNET[0].JOUR.map(
                                 (value: string, i: number) => {
                                     return (
                                         <RadioButton.Item

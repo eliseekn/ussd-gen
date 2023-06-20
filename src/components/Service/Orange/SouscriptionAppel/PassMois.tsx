@@ -45,7 +45,7 @@ const PassMois: React.FC = () => {
                                 toggleModal()
                             }}
                             value={amount}>
-                            {AMOUNT_OPTIONS[0].APPEL[0].MOIS.map(
+                            {AMOUNT_OPTIONS[0].ORANGE[0].APPEL[0].MOIS.map(
                                 (value: string, i: number) => {
                                     return (
                                         <RadioButton.Item

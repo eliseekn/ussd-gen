@@ -6,6 +6,7 @@ import {
     Button,
     Text,
     MD3Colors,
+    Menu,
 } from 'react-native-paper'
 import {getHeaderTitle} from '@react-navigation/elements'
 import {NativeStackHeaderProps} from '@react-navigation/native-stack'
@@ -13,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import {useAppDispatch} from '../../services/redux/hooks'
 import {setUSSDCode} from '../../services/redux/reducers/USSDCodeReducer'
 import {STORAGE_KEY} from '../../const'
+import {Platform, Linking} from 'react-native'
 
 const NavigationBar = ({
     navigation,
@@ -23,8 +25,12 @@ const NavigationBar = ({
     const dispatch = useAppDispatch()
     const title: string = getHeaderTitle(options, route.name)
     const [visible, setVisible] = useState<boolean>(false)
+    const [menuVisible, setMenuVisible] = useState<boolean>(false)
+    const [aboutModalVisible, setAboutModalVisible] = useState<boolean>(false)
 
+    const toggleMenu = () => setMenuVisible(!menuVisible)
     const toggleModal = () => setVisible(!visible)
+    const toggleAboutModal = () => setAboutModalVisible(!visible)
 
     const clearHistory = async (): Promise<void> => {
         try {
@@ -43,11 +49,37 @@ const NavigationBar = ({
             ) : null}
             <Appbar.Content title={title} />
             {title === 'Historique des codes' && (
-                <Appbar.Action
-                    icon="trash-can-outline"
-                    color={MD3Colors.primary40}
-                    onPress={toggleModal}
-                />
+                <Menu
+                    visible={menuVisible}
+                    onDismiss={toggleMenu}
+                    anchor={
+                        <Appbar.Action
+                            icon={
+                                Platform.OS === 'ios'
+                                    ? 'dots-horizontal'
+                                    : 'dots-vertical'
+                            }
+                            color={MD3Colors.primary40}
+                            onPress={toggleMenu}
+                        />
+                    }>
+                    <Menu.Item
+                        leadingIcon="trash-can-outline"
+                        onPress={(): void => {
+                            toggleModal()
+                            toggleMenu()
+                        }}
+                        title="Supprimer l'historique"
+                    />
+                    <Menu.Item
+                        leadingIcon="information-outline"
+                        onPress={(): void => {
+                            toggleAboutModal()
+                            toggleMenu()
+                        }}
+                        title="A propos"
+                    />
+                </Menu>
             )}
             {title === 'Générer un code USSD' && (
                 <Appbar.Action
@@ -73,6 +105,33 @@ const NavigationBar = ({
                                 toggleModal()
                             }}>
                             Oui, tout éffacer
+                        </Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
+
+            <Portal>
+                <Dialog
+                    visible={aboutModalVisible}
+                    onDismiss={toggleAboutModal}>
+                    <Dialog.Title>USSDGen v1.0</Dialog.Title>
+                    <Dialog.Content>
+                        <Text variant="bodyLarge">
+                            Générateur de codes USSD des opérateurs de
+                            téléphonie mobile de Côte d'Ivoire.
+                        </Text>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={() => setAboutModalVisible(false)}>
+                            OK
+                        </Button>
+                        <Button
+                            onPress={() =>
+                                Linking.openURL(
+                                    'https://github.com/eliseekn/ussd-gen',
+                                )
+                            }>
+                            Github
                         </Button>
                     </Dialog.Actions>
                 </Dialog>

@@ -1,32 +1,50 @@
 const STORAGE_KEY: string = 'USSDGEN_CODES'
 const DURATION_OPTIONS: string[] = ['JOUR', 'SEMAINE', 'MOIS']
 
-type DataProps = {
+type DataChildProps = {
     JOUR: string[]
     SEMAINE: string[]
     MOIS: string[]
 }
 
+type DataProps = {
+    APPEL: DataChildProps[]
+    INTERNET: DataChildProps[]
+}
+
 type Props = {
-    APPEL: DataProps[]
-    INTERNET: DataProps[]
+    ORANGE: DataProps[]
 }
 
 const AMOUNT_OPTIONS: Props[] = [
     {
-        APPEL: [
+        ORANGE: [
             {
-                JOUR: ['150 FCFA', '200 FCFA', '300 FCFA'],
-                SEMAINE: ['500 FCFA', '1000 FCFA'],
-                MOIS: ['3000 FCFA', '5000 FCFA', '10000 FCFA', '20000 FCFA'],
-            },
-        ],
+                APPEL: [
+                    {
+                        JOUR: ['150 FCFA', '200 FCFA', '300 FCFA'],
+                        SEMAINE: ['500 FCFA', '1000 FCFA'],
+                        MOIS: [
+                            '3000 FCFA',
+                            '5000 FCFA',
+                            '10000 FCFA',
+                            '20000 FCFA',
+                        ],
+                    },
+                ],
 
-        INTERNET: [
-            {
-                JOUR: ['150 FCFA', '200 FCFA', '300 FCFA', '500 FCFA'],
-                SEMAINE: ['1000 FCFA'],
-                MOIS: ['2500 FCFA', '5000 FCFA', '10000 FCFA', '20000 FCFA'],
+                INTERNET: [
+                    {
+                        JOUR: ['150 FCFA', '200 FCFA', '300 FCFA', '500 FCFA'],
+                        SEMAINE: ['1000 FCFA'],
+                        MOIS: [
+                            '2500 FCFA',
+                            '5000 FCFA',
+                            '10000 FCFA',
+                            '20000 FCFA',
+                        ],
+                    },
+                ],
             },
         ],
     },

@@ -33,10 +33,7 @@ const FactureCIE: React.FC = () => {
 
                 <TextInput
                     mode="outlined"
-                    outlineStyle={{
-                        borderRadius: 30,
-                        borderWidth: 0.8,
-                    }}
+                    outlineStyle={{borderRadius: 30, borderWidth: 0.8}}
                     style={{backgroundColor: 'white'}}
                     value={duration}
                     onChangeText={handleSetDuration}
