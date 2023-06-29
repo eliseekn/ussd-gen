@@ -1,7 +1,14 @@
 import React, {useState} from 'react'
 import {Button, Dialog, List, MD3Colors, Portal, Text} from 'react-native-paper'
 import {USSDCodeType} from '../../interfaces'
-import {TouchableOpacity, View} from 'react-native'
+import {
+    TouchableOpacity,
+    Animated,
+    PanResponder,
+    PanResponderGestureState,
+    GestureResponderEvent,
+    Dimensions,
+} from 'react-native'
 import {Menu} from 'react-native-paper'
 import {copyToClipboard} from '../../utils'
 import {useAppDispatch} from '../../services/redux/hooks'
@@ -16,6 +23,8 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
 
     const [alert, setAlert] = useState<boolean>(false)
     const [menuVisible, setMenuVisible] = useState<boolean>(false)
+    const {width} = Dimensions.get('window')
+    const offsetX = new Animated.Value(0)
 
     const toggleMenu = () => setMenuVisible(!menuVisible)
     const toggleAlert = () => setAlert(!alert)
@@ -26,8 +35,44 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
         dispatch(removeUSSDCode(id))
     }
 
+    const handleSwipe = (): void => {
+        Animated.timing(offsetX, {
+            toValue: -width,
+            duration: 250,
+            useNativeDriver: true,
+        }).start(() => {
+            toggleAlert()
+            offsetX.setValue(0)
+        })
+    }
+
+    const panResponder = PanResponder.create({
+        onMoveShouldSetPanResponder: () => true,
+        onPanResponderMove: (
+            event: GestureResponderEvent,
+            gestureState: PanResponderGestureState,
+        ) => {
+            offsetX.setValue(gestureState.dx)
+        },
+        onPanResponderRelease: (
+            event: GestureResponderEvent,
+            gestureState: PanResponderGestureState,
+        ) => {
+            if (Math.abs(gestureState.dx) > width * 0.25) {
+                handleSwipe()
+            } else {
+                Animated.spring(offsetX, {
+                    toValue: 0,
+                    useNativeDriver: true,
+                }).start()
+            }
+        },
+    })
+
     return (
-        <View>
+        <Animated.View
+            {...panResponder.panHandlers}
+            style={{transform: [{translateX: offsetX}]}}>
             <List.Subheader
                 style={{
                     marginVertical: 0,
@@ -101,7 +146,7 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
-        </View>
+        </Animated.View>
     )
 }
 
