@@ -4,13 +4,19 @@ Générateur de codes USSD des opérateurs de téléphonie mobile de Côte d'Ivo
 
 ## Requirements
 ```
-Node 16.x
+Node ^16.x
 ```
 
 ## Installation
 ```
 git clone https://github.com/eliseekn/ussd-gen.git
 ```
+
+## Main features
+- React Native
+- React Native Paper (UI)
+- Redux Toolkit
+- Typescript
 
 ## License
 [MIT](https://opensource.org/licenses/MIT)
