@@ -6,8 +6,8 @@ import {RootStackParamList, USSDCodeType} from '../../interfaces'
 import type {RouteProp} from '@react-navigation/native'
 import SouscriptionAppel from '../../components/Service/Orange/SouscriptionAppel'
 import SouscriptionInternet from '../../components/Service/Orange/SouscriptionInternet'
-import {Button, Dialog, Portal, Snackbar, Text} from 'react-native-paper'
-import {copyToClipboard, generateUSSDCode} from '../../utils'
+import {Button, Dialog, Portal, Text} from 'react-native-paper'
+import {copyCodeToPhone, generateUSSDCode} from '../../utils'
 import {addUSSDCode} from '../../services/redux/reducers/USSDCodeReducer'
 import {useAppDispatch, useAppSelector} from '../../services/redux/hooks'
 import {RootState} from '../../services/redux/store'
@@ -51,12 +51,10 @@ const ServiceScreen: React.FC = () => {
     const mobileOperator: string = route.params.mobileOperator
     const service: string = route.params.service
 
-    const [alertModal, setAlertModal] = useState<boolean>(false)
     const [alert, setAlert] = useState<boolean>(false)
     const [alertMessage, setAlertMessage] = useState<string>('')
 
     const toggleAlert = () => setAlert(!alert)
-    const toggleAlertModal = () => setAlertModal(!alert)
 
     const amount: string = useAppSelector<string>(
         (state: RootState) => state.amount,
@@ -87,15 +85,14 @@ const ServiceScreen: React.FC = () => {
         )
 
         setAlertMessage('Code USSD : ' + USSDCode)
-        setAlertModal(true)
+        setAlert(true)
     }
 
-    const handleCopyToClipboard = (): void => {
-        copyToClipboard(
+    const handleCopyCodeToPhone = async (): Promise<void> => {
+        setAlert(false)
+        await copyCodeToPhone(
             generateUSSDCode(mobileOperator, service, amount, duration),
         )
-        setAlertModal(false)
-        toggleAlert()
     }
 
     return (
@@ -112,28 +109,19 @@ const ServiceScreen: React.FC = () => {
                 </Button>
 
                 <Portal>
-                    <Dialog visible={alertModal} onDismiss={toggleAlertModal}>
+                    <Dialog visible={alert} onDismiss={toggleAlert}>
                         <Dialog.Content>
                             <Text variant="bodyLarge">{alertMessage}</Text>
                         </Dialog.Content>
                         <Dialog.Actions>
-                            <Button onPress={handleCopyToClipboard}>
+                            <Button onPress={handleCopyCodeToPhone}>
                                 COPIER
                             </Button>
-                            <Button onPress={() => setAlertModal(false)}>
-                                OK
-                            </Button>
+                            <Button onPress={() => setAlert(false)}>OK</Button>
                         </Dialog.Actions>
                     </Dialog>
                 </Portal>
             </View>
-
-            <Snackbar
-                visible={alert}
-                onDismiss={toggleAlert}
-                action={{label: 'OK', onPress: () => {}}}>
-                Le code USSD a été copié avec succès.
-            </Snackbar>
         </SafeAreaView>
     )
 }

@@ -10,9 +10,9 @@ import {
     Dimensions,
 } from 'react-native'
 import {Menu} from 'react-native-paper'
-import {copyToClipboard} from '../../utils'
 import {useAppDispatch} from '../../services/redux/hooks'
 import {removeUSSDCode} from '../../services/redux/reducers/USSDCodeReducer'
+import {copyCodeToPhone} from '../../utils'
 
 type Props = {
     data: USSDCodeType
@@ -28,8 +28,6 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
 
     const toggleMenu = () => setMenuVisible(!menuVisible)
     const toggleAlert = () => setAlert(!alert)
-
-    const handleCopyToClipboard = (): void => copyToClipboard(data.value)
 
     const handleDeleteUSSDCode = (id: number): void => {
         dispatch(removeUSSDCode(id))
@@ -109,8 +107,8 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
                             <Menu.Item
                                 leadingIcon="content-copy"
                                 onPress={() => {
-                                    handleCopyToClipboard()
                                     toggleMenu()
+                                    copyCodeToPhone(data.value)
                                 }}
                                 title="Copier"
                             />

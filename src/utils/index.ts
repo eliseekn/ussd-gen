@@ -1,6 +1,7 @@
 import generateUSSDCode from './GenerateUSSDCode'
-import Clipboard from '@react-native-clipboard/clipboard'
+import {Linking} from 'react-native'
 
-const copyToClipboard = (text: string) => Clipboard.setString(text)
+const copyCodeToPhone = async (code: string): Promise<void> =>
+    await Linking.openURL(`tel:${encodeURIComponent(code)}`)
 
-export {generateUSSDCode, copyToClipboard}
+export {generateUSSDCode, copyCodeToPhone}

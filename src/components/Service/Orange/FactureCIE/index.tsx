@@ -37,7 +37,7 @@ const FactureCIE: React.FC = () => {
                     style={{backgroundColor: 'white'}}
                     value={duration}
                     onChangeText={handleSetDuration}
-                    maxLength={9}
+                    maxLength={11}
                     keyboardType="number-pad"
                 />
             </View>

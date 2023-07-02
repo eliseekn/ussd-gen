@@ -20,8 +20,8 @@ const MobileOperatorScreen: React.FC = () => {
         useState<boolean>(false)
     const [serviceModalVisible, setServiceModalVisible] =
         useState<boolean>(false)
-    const [mobileOperator, setMobileOperator] = useState<string>('ORANGE')
-    const [service, setService] = useState<string>('SOUSCRIPTION APPEL')
+    const [mobileOperator, setMobileOperator] = useState<string>('')
+    const [service, setService] = useState<string>('')
 
     const toggleMobileOperatorModal = () =>
         setMobileOperatorModalVisible(!mobileOperatorModalVisible)
