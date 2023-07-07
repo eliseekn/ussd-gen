@@ -13,3 +13,10 @@ export type RootStackParamList = {
     MobileOperator: undefined
     Service: {mobileOperator: string; service: string}
 }
+
+export type ParameterType = {
+    duration?: string
+    amount?: string
+    account?: string
+    contact?: string
+}

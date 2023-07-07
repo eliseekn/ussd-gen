@@ -2,27 +2,24 @@ import SouscriptionAppel from './Orange/SouscriptionAppel'
 import SouscriptionInternet from './Orange/SouscriptionInternet'
 import Facture from './Orange/Facture'
 import ReabonnementCANAL from './Orange/ReabonnementCANAL'
+import {ParameterType} from '../../interfaces'
 
 const generateUSSDCode = (
     mobileOperator: string,
     service: string,
-    amount?: string,
-    duration?: string,
+    parameter: ParameterType,
 ): string => {
     if (mobileOperator === 'ORANGE') {
         switch (service) {
             case 'SOUSCRIPTION APPEL':
-                return SouscriptionAppel(duration as string, amount as string)
+                return SouscriptionAppel(parameter)
             case 'SOUSCRIPTION INTERNET':
-                return SouscriptionInternet(
-                    duration as string,
-                    amount as string,
-                )
+                return SouscriptionInternet(parameter)
             case 'FACTURE CIE':
             case 'FACTURE SODECIE':
-                return Facture(service, duration as string, amount as string)
+                return Facture(service, parameter)
             case 'REABONNEMENT CANAL+':
-                return ReabonnementCANAL(duration as string)
+                return ReabonnementCANAL(parameter)
         }
     }
 

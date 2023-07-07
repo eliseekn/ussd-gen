@@ -22,27 +22,17 @@ const AMOUNT_OPTIONS: Props[] = [
             {
                 APPEL: [
                     {
-                        JOUR: ['150 FCFA', '200 FCFA', '300 FCFA'],
-                        SEMAINE: ['500 FCFA', '1000 FCFA'],
-                        MOIS: [
-                            '3000 FCFA',
-                            '5000 FCFA',
-                            '10000 FCFA',
-                            '20000 FCFA',
-                        ],
+                        JOUR: ['150', '200', '300'],
+                        SEMAINE: ['500', '1000'],
+                        MOIS: ['3000', '5000', '10000', '20000'],
                     },
                 ],
 
                 INTERNET: [
                     {
-                        JOUR: ['150 FCFA', '200 FCFA', '300 FCFA', '500 FCFA'],
-                        SEMAINE: ['1000 FCFA'],
-                        MOIS: [
-                            '2500 FCFA',
-                            '5000 FCFA',
-                            '10000 FCFA',
-                            '20000 FCFA',
-                        ],
+                        JOUR: ['150', '200', '300', '500'],
+                        SEMAINE: ['1000'],
+                        MOIS: ['2500', '5000', '10000', '20000'],
                     },
                 ],
             },

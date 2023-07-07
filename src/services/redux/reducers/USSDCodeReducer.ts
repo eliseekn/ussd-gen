@@ -26,7 +26,7 @@ export const USSDCode = createSlice({
             state.unshift(action.payload)
             handleStoreData(state)
         },
-        removeUSSDCode(state, action: PayloadAction<number>) {
+        removeUSSDCode(state: USSDCodeType[], action: PayloadAction<number>) {
             const newState = state.filter(
                 (value: USSDCodeType) => value.id !== action.payload,
             )

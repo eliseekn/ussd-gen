@@ -1,27 +1,24 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {View} from 'react-native'
 import {Text, TextInput} from 'react-native-paper'
 import {useAppDispatch, useAppSelector} from '../../../../services/redux/hooks'
 import {RootState} from '../../../../services/redux/store'
-import {setDuration} from '../../../../services/redux/reducers/durationReducer'
-import {setAmount} from '../../../../services/redux/reducers/amountReducer'
+import {ParameterType} from '../../../../interfaces'
+import {setParameter} from '../../../../services/redux/reducers/parameterReducer'
 
 const FactureCIE: React.FC = () => {
     const dispatch = useAppDispatch()
 
-    const duration: string = useAppSelector<string>(
-        (state: RootState) => state.duration,
+    const parameter: ParameterType = useAppSelector<{}>(
+        (state: RootState) => state.parameter,
     )
 
-    const [amount, setTmpAmount] = useState<string>('')
-
-    const handleSetDuration = (value: string): void => {
-        dispatch(setDuration(value))
+    const handleSetAccount = (value: string): void => {
+        dispatch(setParameter({...parameter, account: value}))
     }
 
     const handleSetAmount = (value: string) => {
-        setTmpAmount(value)
-        dispatch(setAmount(value + ' FCFA'))
+        dispatch(setParameter({...parameter, amount: value}))
     }
 
     return (
@@ -35,8 +32,8 @@ const FactureCIE: React.FC = () => {
                     mode="outlined"
                     outlineStyle={{borderRadius: 30, borderWidth: 0.8}}
                     style={{backgroundColor: 'white'}}
-                    value={duration}
-                    onChangeText={handleSetDuration}
+                    value={parameter.account}
+                    onChangeText={handleSetAccount}
                     maxLength={11}
                     keyboardType="number-pad"
                 />
@@ -51,7 +48,7 @@ const FactureCIE: React.FC = () => {
                     mode="outlined"
                     outlineStyle={{borderRadius: 30, borderWidth: 0.8}}
                     style={{backgroundColor: 'white'}}
-                    value={amount}
+                    value={parameter.amount}
                     onChangeText={handleSetAmount}
                     keyboardType="number-pad"
                 />

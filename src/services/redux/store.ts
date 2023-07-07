@@ -1,15 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit'
-import durationReducer from './reducers/durationReducer'
-import amountReducer from './reducers/amountReducer'
 import USSDCodeReducer from './reducers/USSDCodeReducer'
 import USSDCodeIdReducer from './reducers/USSDCodeIdReducer'
+import parameterReducer from './reducers/parameterReducer'
 
 export const store = configureStore({
     reducer: {
-        duration: durationReducer,
-        amount: amountReducer,
         USSDCode: USSDCodeReducer,
         USSDCodeId: USSDCodeIdReducer,
+        parameter: parameterReducer,
     },
 })
 

@@ -1,21 +1,25 @@
 import React, {useState} from 'react'
 import {View} from 'react-native'
 import {Button, Dialog, Portal, RadioButton, Text} from 'react-native-paper'
-import {useAppDispatch} from '../../../../services/redux/hooks'
-import {setAmount} from '../../../../services/redux/reducers/amountReducer'
+import {useAppDispatch, useAppSelector} from '../../../../services/redux/hooks'
 import {AMOUNT_OPTIONS} from '../../../../const'
+import {setParameter} from '../../../../services/redux/reducers/parameterReducer'
+import {ParameterType} from '../../../../interfaces'
+import {RootState} from '../../../../services/redux/store'
 
 const PassJour: React.FC = () => {
     const dispatch = useAppDispatch()
 
-    const [amount, setTmpAmount] = useState<string>('')
+    const parameter: ParameterType = useAppSelector<{}>(
+        (state: RootState) => state.parameter,
+    )
+
     const [modalVisible, setModalVisible] = useState<boolean>(false)
 
     const toggleModal = () => setModalVisible(!modalVisible)
 
     const handleSetAmount = (value: string) => {
-        setTmpAmount(value)
-        dispatch(setAmount(value))
+        dispatch(setParameter({...parameter, amount: value}))
     }
 
     return (
@@ -33,7 +37,7 @@ const PassJour: React.FC = () => {
                     justifyContent: 'space-between',
                 }}
                 onPress={toggleModal}>
-                {amount}
+                {parameter.amount}
             </Button>
 
             <Portal>
@@ -44,7 +48,7 @@ const PassJour: React.FC = () => {
                                 handleSetAmount(value)
                                 toggleModal()
                             }}
-                            value={amount}>
+                            value={parameter.amount as string}>
                             {AMOUNT_OPTIONS[0].ORANGE[0].APPEL[0].JOUR.map(
                                 (value: string, i: number) => {
                                     return (

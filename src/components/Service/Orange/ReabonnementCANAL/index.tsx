@@ -3,22 +3,18 @@ import {View} from 'react-native'
 import {Text, TextInput} from 'react-native-paper'
 import {useAppDispatch, useAppSelector} from '../../../../services/redux/hooks'
 import {RootState} from '../../../../services/redux/store'
-import {setDuration} from '../../../../services/redux/reducers/durationReducer'
-import {setAmount} from '../../../../services/redux/reducers/amountReducer'
+import {ParameterType} from '../../../../interfaces'
+import {setParameter} from '../../../../services/redux/reducers/parameterReducer'
 
 const ReabonnementCANAL: React.FC = () => {
     const dispatch = useAppDispatch()
 
-    const duration: string = useAppSelector<string>(
-        (state: RootState) => state.duration,
+    const parameter: ParameterType = useAppSelector<{}>(
+        (state: RootState) => state.parameter,
     )
 
-    const handleSetDuration = (value: string): void => {
-        dispatch(setDuration(value))
-    }
-
-    const handleSetAmount = (): void => {
-        dispatch(setAmount(''))
+    const handleSetAccount = (value: string): void => {
+        dispatch(setParameter({...parameter, account: value}))
     }
 
     return (
@@ -32,11 +28,8 @@ const ReabonnementCANAL: React.FC = () => {
                     mode="outlined"
                     outlineStyle={{borderRadius: 30, borderWidth: 0.8}}
                     style={{backgroundColor: 'white'}}
-                    value={duration}
-                    onChangeText={(value: string) => {
-                        handleSetDuration(value)
-                        handleSetAmount()
-                    }}
+                    value={parameter.account as string}
+                    onChangeText={(value: string) => handleSetAccount(value)}
                     maxLength={14}
                     keyboardType="number-pad"
                 />

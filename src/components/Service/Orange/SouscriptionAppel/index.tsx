@@ -6,22 +6,23 @@ import {RootState} from '../../../../services/redux/store'
 import PassJour from './PassJour'
 import PassSemaine from './PassSemaine'
 import PassMois from './PassMois'
-import {setDuration} from '../../../../services/redux/reducers/durationReducer'
 import {DURATION_OPTIONS} from '../../../../const'
+import {ParameterType} from '../../../../interfaces'
+import {setParameter} from '../../../../services/redux/reducers/parameterReducer'
 
 const SouscriptionAppel: React.FC = () => {
     const dispatch = useAppDispatch()
 
-    const duration: string = useAppSelector<string>(
-        (state: RootState) => state.duration,
+    const parameter: ParameterType = useAppSelector<{}>(
+        (state: RootState) => state.parameter,
     )
 
     const [modalVisible, setModalVisible] = useState<boolean>(false)
 
     const toggleModal = () => setModalVisible(!modalVisible)
 
-    const handleSetDuration = (value: string): void => {
-        dispatch(setDuration(value))
+    const handleSetDuration = (value: string) => {
+        dispatch(setParameter({...parameter, duration: value}))
     }
 
     return (
@@ -40,7 +41,7 @@ const SouscriptionAppel: React.FC = () => {
                         justifyContent: 'space-between',
                     }}
                     onPress={toggleModal}>
-                    {duration}
+                    {parameter.duration}
                 </Button>
 
                 <Portal>
@@ -51,7 +52,7 @@ const SouscriptionAppel: React.FC = () => {
                                     handleSetDuration(value)
                                     toggleModal()
                                 }}
-                                value={duration}>
+                                value={parameter.duration as string}>
                                 {DURATION_OPTIONS.map(
                                     (value: string, i: number) => {
                                         return (
@@ -69,9 +70,9 @@ const SouscriptionAppel: React.FC = () => {
                 </Portal>
             </View>
 
-            {duration === 'JOUR' && <PassJour />}
-            {duration === 'SEMAINE' && <PassSemaine />}
-            {duration === 'MOIS' && <PassMois />}
+            {parameter.duration === 'JOUR' && <PassJour />}
+            {parameter.duration === 'SEMAINE' && <PassSemaine />}
+            {parameter.duration === 'MOIS' && <PassMois />}
         </View>
     )
 }

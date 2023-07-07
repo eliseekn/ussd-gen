@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {styles} from '../styles'
 import {SafeAreaView, View} from 'react-native'
 import {useRoute} from '@react-navigation/native'
-import {RootStackParamList, USSDCodeType} from '../../interfaces'
+import {ParameterType, RootStackParamList, USSDCodeType} from '../../interfaces'
 import type {RouteProp} from '@react-navigation/native'
 import SouscriptionAppel from '../../components/Service/Orange/SouscriptionAppel'
 import SouscriptionInternet from '../../components/Service/Orange/SouscriptionInternet'
@@ -47,29 +47,45 @@ const ServiceScreen: React.FC = () => {
         (state: RootState) => state.USSDCodeId,
     )
 
+    const parameter: ParameterType = useAppSelector<{}>(
+        (state: RootState) => state.parameter,
+    )
+
     const route = useRoute<Props>()
     const mobileOperator: string = route.params.mobileOperator
     const service: string = route.params.service
-
     const [alert, setAlert] = useState<boolean>(false)
     const [alertMessage, setAlertMessage] = useState<string>('')
 
     const toggleAlert = () => setAlert(!alert)
 
-    const amount: string = useAppSelector<string>(
-        (state: RootState) => state.amount,
-    )
+    const handleSetDescription = () => {
+        let description: string = ''
 
-    const duration: string = useAppSelector<string>(
-        (state: RootState) => state.duration,
-    )
+        if (parameter.duration) {
+            description += parameter.duration + ' - '
+        }
+
+        if (parameter.account) {
+            description += parameter.account + ' - '
+        }
+
+        if (parameter.amount) {
+            description += parameter.amount + ' FCFA'
+        }
+
+        if (parameter.contact) {
+            description += parameter.contact
+        }
+
+        return description
+    }
 
     const handleGenerateCode = (): void => {
         const USSDCode: string = generateUSSDCode(
             mobileOperator,
             service,
-            amount,
-            duration,
+            parameter,
         )
 
         dispatch(incrementUSSDCodeId())
@@ -80,7 +96,7 @@ const ServiceScreen: React.FC = () => {
                 mobileOperator: mobileOperator,
                 service: service,
                 value: USSDCode,
-                description: amount ? duration + ' - ' + amount : duration,
+                description: handleSetDescription(),
             } as USSDCodeType),
         )
 
@@ -91,7 +107,7 @@ const ServiceScreen: React.FC = () => {
     const handleCopyCodeToPhone = async (): Promise<void> => {
         setAlert(false)
         await copyCodeToPhone(
-            generateUSSDCode(mobileOperator, service, amount, duration),
+            generateUSSDCode(mobileOperator, service, parameter),
         )
     }
 

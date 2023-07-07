@@ -1,17 +1,19 @@
-const SouscriptionInternet = (duration: string, amount: string): string => {
+import {ParameterType} from '../../../interfaces'
+
+const SouscriptionInternet = (parameter: ParameterType): string => {
     let result: string = '#111*1*2'
 
-    if (duration === 'JOUR') {
+    if (parameter.duration === 'JOUR') {
         result += '*2'
 
-        switch (amount) {
-            case '150 FCFA':
+        switch (parameter.amount) {
+            case '150':
                 result += '*1'
                 break
-            case '200 FCFA':
+            case '200':
                 result += '*2'
                 break
-            case '300 FCFA':
+            case '300':
                 result += '*3'
                 break
             default:
@@ -20,27 +22,27 @@ const SouscriptionInternet = (duration: string, amount: string): string => {
         }
     }
 
-    if (duration === 'SEMAINE') {
+    if (parameter.duration === 'SEMAINE') {
         result += '*3'
 
-        switch (amount) {
+        switch (parameter.amount) {
             default:
                 result += '*1'
                 break
         }
     }
 
-    if (duration === 'MOIS') {
+    if (parameter.duration === 'MOIS') {
         result += '*4'
 
-        switch (amount) {
-            case '2500 FCFA':
+        switch (parameter.amount) {
+            case '2500':
                 result += '*1'
                 break
-            case '5000 FCFA':
+            case '5000':
                 result += '*2'
                 break
-            case '10000 FCFA':
+            case '10000':
                 result += '*3'
                 break
             default:
@@ -49,7 +51,7 @@ const SouscriptionInternet = (duration: string, amount: string): string => {
         }
     }
 
-    return result + '#'
+    return result + '1*1*1#'
 }
 
 export default SouscriptionInternet

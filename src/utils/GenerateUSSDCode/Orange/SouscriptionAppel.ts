@@ -1,14 +1,16 @@
-const SouscriptionAppel = (duration: string, amount: string): string => {
+import {ParameterType} from '../../../interfaces'
+
+const SouscriptionAppel = (parameter: ParameterType): string => {
     let result: string = '#111*1*1'
 
-    if (duration === 'JOUR') {
+    if (parameter.duration === 'JOUR') {
         result += '*1'
 
-        switch (amount) {
-            case '300 FCFA':
+        switch (parameter.amount) {
+            case '300':
                 result += '*1'
                 break
-            case '200 FCFA':
+            case '200':
                 result += '*2'
                 break
             default:
@@ -17,11 +19,11 @@ const SouscriptionAppel = (duration: string, amount: string): string => {
         }
     }
 
-    if (duration === 'SEMAINE') {
+    if (parameter.duration === 'SEMAINE') {
         result += '*2'
 
-        switch (amount) {
-            case '1000 FCFA':
+        switch (parameter.amount) {
+            case '1000':
                 result += '*1'
                 break
             default:
@@ -30,17 +32,17 @@ const SouscriptionAppel = (duration: string, amount: string): string => {
         }
     }
 
-    if (duration === 'MOIS') {
+    if (parameter.duration === 'MOIS') {
         result += '*3'
 
-        switch (amount) {
-            case '20000 FCFA':
+        switch (parameter.amount) {
+            case '20000':
                 result += '*1'
                 break
-            case '10000 FCFA':
+            case '10000':
                 result += '*2'
                 break
-            case '5000 FCFA':
+            case '5000':
                 result += '*3'
                 break
             default:
@@ -49,7 +51,7 @@ const SouscriptionAppel = (duration: string, amount: string): string => {
         }
     }
 
-    return result + '#'
+    return result + '1*1*1#'
 }
 
 export default SouscriptionAppel

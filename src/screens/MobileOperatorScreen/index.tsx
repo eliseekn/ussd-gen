@@ -6,9 +6,8 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import {useNavigation} from '@react-navigation/native'
 import {RootStackParamList} from '../../interfaces'
 import {MOBILE_OPERATOR_OPTIONS, SERVICE_OPTIONS} from '../../const'
-import {setAmount} from '../../services/redux/reducers/amountReducer'
-import {setDuration} from '../../services/redux/reducers/durationReducer'
 import {useAppDispatch} from '../../services/redux/hooks'
+import {setParameter} from '../../services/redux/reducers/parameterReducer'
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Service'>
 
@@ -126,8 +125,14 @@ const MobileOperatorScreen: React.FC = () => {
                 contentStyle={{flexDirection: 'row-reverse'}}
                 uppercase={true}
                 onPress={() => {
-                    dispatch(setAmount(''))
-                    dispatch(setDuration(''))
+                    dispatch(
+                        setParameter({
+                            amount: '',
+                            duration: '',
+                            account: '',
+                            contact: '',
+                        }),
+                    )
 
                     navigation.navigate('Service', {
                         mobileOperator: mobileOperator,
