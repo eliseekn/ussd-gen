@@ -12,7 +12,9 @@ Node ^16.x
 git clone https://github.com/eliseekn/ussd-gen.git
 ```
 
-## Main features
+## Features
+- Work Offline
+- Secure (no sensitive data stored)
 - React Native
 - React Native Paper (UI)
 - Redux Toolkit
