@@ -1,6 +1,13 @@
 import React, {useState} from 'react'
 import {View} from 'react-native'
-import {Button, Text, Dialog, Portal, RadioButton} from 'react-native-paper'
+import {
+    Button,
+    Text,
+    Dialog,
+    Portal,
+    RadioButton,
+    TextInput,
+} from 'react-native-paper'
 import {useAppDispatch, useAppSelector} from '../../../../services/redux/hooks'
 import {RootState} from '../../../../services/redux/store'
 import PassJour from './PassJour'
@@ -23,6 +30,10 @@ const SouscriptionInternet: React.FC = () => {
 
     const handleSetDuration = (value: string) => {
         dispatch(setParameter({...parameter, duration: value}))
+    }
+
+    const handleSetContact = (value: string) => {
+        dispatch(setParameter({...parameter, contact: value}))
     }
 
     return (
@@ -73,6 +84,27 @@ const SouscriptionInternet: React.FC = () => {
             {parameter.duration === 'JOUR' && <PassJour />}
             {parameter.duration === 'SEMAINE' && <PassSemaine />}
             {parameter.duration === 'MOIS' && <PassMois />}
+
+            {parameter.duration && (
+                <View style={{marginTop: 15}}>
+                    <Text variant="bodyLarge" style={{marginBottom: 5}}>
+                        Souscrire pour un contact
+                    </Text>
+
+                    <TextInput
+                        mode="outlined"
+                        placeholder="Numéro de de téléphone"
+                        outlineStyle={{borderRadius: 30, borderWidth: 0.8}}
+                        style={{backgroundColor: 'white'}}
+                        value={parameter.contact as string}
+                        onChangeText={(value: string) =>
+                            handleSetContact(value)
+                        }
+                        maxLength={10}
+                        keyboardType="number-pad"
+                    />
+                </View>
+            )}
         </View>
     )
 }

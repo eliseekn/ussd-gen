@@ -75,7 +75,7 @@ const ServiceScreen: React.FC = () => {
         }
 
         if (parameter.contact) {
-            description += parameter.contact
+            description += ' - ' + parameter.contact
         }
 
         return description
