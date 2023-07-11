@@ -120,6 +120,9 @@ const NavigationBar = ({
                             Générateur de codes USSD des opérateurs de
                             téléphonie mobile de Côte d'Ivoire.
                         </Text>
+                        <Text variant="bodyLarge" style={{marginTop: 15}}>
+                            Développé par eliseekn@gmail.com
+                        </Text>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={() => setAboutModalVisible(false)}>

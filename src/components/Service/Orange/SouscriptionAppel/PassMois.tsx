@@ -10,7 +10,7 @@ import {setParameter} from '../../../../services/redux/reducers/parameterReducer
 const PassMois: React.FC = () => {
     const dispatch = useAppDispatch()
 
-    const parameter: ParameterType = useAppSelector<{}>(
+    const parameter: ParameterType = useAppSelector<ParameterType>(
         (state: RootState) => state.parameter,
     )
 

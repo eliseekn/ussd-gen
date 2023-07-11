@@ -10,7 +10,7 @@ import {RootState} from '../../../../services/redux/store'
 const PassJour: React.FC = () => {
     const dispatch = useAppDispatch()
 
-    const parameter: ParameterType = useAppSelector<{}>(
+    const parameter: ParameterType = useAppSelector<ParameterType>(
         (state: RootState) => state.parameter,
     )
 

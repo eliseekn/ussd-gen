@@ -47,7 +47,7 @@ const SERVICE_OPTIONS: string[] = [
     'SOUSCRIPTION INTERNET',
     'FACTURE CIE',
     'FACTURE SODECIE',
-    'REABONNEMENT CANAL+',
+    'REABONNEMENT CANAL',
 ]
 
 export {

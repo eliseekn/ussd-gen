@@ -9,7 +9,7 @@ import {ParameterType} from '../../../../interfaces'
 const FactureSODECIE: React.FC = () => {
     const dispatch = useAppDispatch()
 
-    const parameter: ParameterType = useAppSelector<{}>(
+    const parameter: ParameterType = useAppSelector<ParameterType>(
         (state: RootState) => state.parameter,
     )
 

@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {styles} from '../styles'
 import {SafeAreaView, View} from 'react-native'
-import {useRoute} from '@react-navigation/native'
+import {useNavigation, useRoute} from '@react-navigation/native'
 import {ParameterType, RootStackParamList, USSDCodeType} from '../../interfaces'
 import type {RouteProp} from '@react-navigation/native'
 import SouscriptionAppel from '../../components/Service/Orange/SouscriptionAppel'
@@ -15,8 +15,10 @@ import {incrementUSSDCodeId} from '../../services/redux/reducers/USSDCodeIdReduc
 import FactureCIE from '../../components/Service/Orange/FactureCIE'
 import FactureSODECIE from '../../components/Service/Orange/FactureSODECIE'
 import ReabonnementCANAL from '../../components/Service/Orange/ReabonnementCANAL'
+import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 
 type Props = RouteProp<RootStackParamList, 'Service'>
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Service'>
 
 const serviceComponent = (
     mobileOperator: string,
@@ -32,7 +34,7 @@ const serviceComponent = (
                 return <FactureCIE />
             case 'FACTURE SODECIE':
                 return <FactureSODECIE />
-            case 'REABONNEMENT CANAL+':
+            case 'REABONNEMENT CANAL':
                 return <ReabonnementCANAL />
         }
     }
@@ -40,20 +42,45 @@ const serviceComponent = (
     return <></>
 }
 
+const handleSetHeaderTitle = (service: string): string => {
+    switch (service) {
+        case 'SOUSCRIPTION APPEL':
+            return 'Souscription Appel'
+        case 'SOUSCRIPTION INTERNET':
+            return 'Souscription Internet'
+        case 'FACTURE CIE':
+            return 'Facture CIE'
+        case 'FACTURE SODECIE':
+            return 'Facture SODECIE'
+        case 'REABONNEMENT CANAL':
+            return 'Réabonnement CANAL'
+        default:
+            return 'Transfert d\'argent'
+    }
+}
+
 const ServiceScreen: React.FC = () => {
+    const navigation = useNavigation<NavigationProp>()
     const dispatch = useAppDispatch()
 
     const USSDCodeId: number = useAppSelector<number>(
         (state: RootState) => state.USSDCodeId,
     )
 
-    const parameter: ParameterType = useAppSelector<{}>(
+    const parameter: ParameterType = useAppSelector<ParameterType>(
         (state: RootState) => state.parameter,
     )
+
+    useEffect(() => {
+        navigation.setOptions({
+            title: handleSetHeaderTitle(route.params.service),
+        })
+    }, [])
 
     const route = useRoute<Props>()
     const mobileOperator: string = route.params.mobileOperator
     const service: string = route.params.service
+
     const [alert, setAlert] = useState<boolean>(false)
     const [alertMessage, setAlertMessage] = useState<string>('')
 
@@ -67,11 +94,11 @@ const ServiceScreen: React.FC = () => {
         }
 
         if (parameter.account) {
-            description += parameter.account + ' - '
+            description += parameter.account
         }
 
         if (parameter.amount) {
-            description += parameter.amount + ' FCFA'
+            description += +' - ' + parameter.amount + ' FCFA'
         }
 
         if (parameter.contact) {

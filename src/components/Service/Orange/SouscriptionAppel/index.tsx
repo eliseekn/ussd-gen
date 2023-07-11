@@ -7,6 +7,7 @@ import {
     Portal,
     RadioButton,
     TextInput,
+    MD3Colors,
 } from 'react-native-paper'
 import {useAppDispatch, useAppSelector} from '../../../../services/redux/hooks'
 import {RootState} from '../../../../services/redux/store'
@@ -20,11 +21,13 @@ import {setParameter} from '../../../../services/redux/reducers/parameterReducer
 const SouscriptionAppel: React.FC = () => {
     const dispatch = useAppDispatch()
 
-    const parameter: ParameterType = useAppSelector<{}>(
+    const parameter: ParameterType = useAppSelector<ParameterType>(
         (state: RootState) => state.parameter,
     )
 
     const [modalVisible, setModalVisible] = useState<boolean>(false)
+    const [alert, setAlert] = useState<boolean>(false)
+    const toggleAlert = () => setAlert(!alert)
 
     const toggleModal = () => setModalVisible(!modalVisible)
 
@@ -38,6 +41,35 @@ const SouscriptionAppel: React.FC = () => {
 
     return (
         <View>
+            <View>
+                <Text
+                    style={{
+                        textAlign: 'right',
+                        textDecorationLine: 'underline',
+                        color: MD3Colors.primary40,
+                    }}
+                    onPress={toggleAlert}>
+                    Comment ça marche?
+                </Text>
+
+                <Portal>
+                    <Dialog visible={alert} onDismiss={toggleAlert}>
+                        <Dialog.Content>
+                            <Text variant="bodyLarge">
+                                Inscrivez le numéro de téléphone du contact à
+                                qui vous voulez payer la souscription. Dans le
+                                cas contraire, laissez le champ vide.
+                            </Text>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <Button onPress={() => setAlert(false)}>
+                                OK, j'ai compris
+                            </Button>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
+            </View>
+
             <View>
                 <Text variant="bodyLarge" style={{marginBottom: 5}}>
                     Sélectionnez une durée
@@ -93,7 +125,6 @@ const SouscriptionAppel: React.FC = () => {
 
                     <TextInput
                         mode="outlined"
-                        placeholder="Numéro de de téléphone"
                         outlineStyle={{borderRadius: 30, borderWidth: 0.8}}
                         style={{backgroundColor: 'white'}}
                         value={parameter.contact as string}
