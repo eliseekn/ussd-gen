@@ -71,7 +71,7 @@ const SouscriptionInternet: React.FC = () => {
             </View>
             <View>
                 <Text variant="bodyLarge" style={{marginBottom: 5}}>
-                    Sélectionnez une durée
+                    Durée
                 </Text>
 
                 <Button

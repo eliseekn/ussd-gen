@@ -31,7 +31,7 @@ const MobileOperatorScreen: React.FC = () => {
         <SafeAreaView style={styles.container}>
             <View>
                 <Text variant="bodyLarge" style={{marginBottom: 5}}>
-                    Sélectionnez un opérateur mobile
+                    Opérateur mobile
                 </Text>
 
                 <Button
@@ -76,7 +76,7 @@ const MobileOperatorScreen: React.FC = () => {
 
             <View style={{marginTop: 15, marginBottom: 20}}>
                 <Text variant="bodyLarge" style={{marginBottom: 5}}>
-                    Sélectionnez un service
+                    Service
                 </Text>
 
                 <Button

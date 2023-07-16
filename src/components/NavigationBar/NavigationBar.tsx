@@ -48,7 +48,7 @@ const NavigationBar = ({
                 />
             ) : null}
             <Appbar.Content title={title} />
-            {title === 'Historique des codes' && (
+            {title === 'Historique' && (
                 <Menu
                     visible={menuVisible}
                     onDismiss={toggleMenu}
@@ -67,9 +67,8 @@ const NavigationBar = ({
                         leadingIcon="trash-can-outline"
                         onPress={(): void => {
                             toggleModal()
-                            toggleMenu()
                         }}
-                        title="Supprimer l'historique"
+                        title="Effacer l'historique"
                     />
                     <Menu.Item
                         leadingIcon="information-outline"
@@ -81,7 +80,7 @@ const NavigationBar = ({
                     />
                 </Menu>
             )}
-            {title === 'Générer un code' && (
+            {title !== 'Nouveau' && title !== 'Historique' && (
                 <Appbar.Action
                     icon="history"
                     color={MD3Colors.primary40}
@@ -93,8 +92,7 @@ const NavigationBar = ({
                 <Dialog visible={visible} onDismiss={toggleModal}>
                     <Dialog.Content>
                         <Text variant="bodyLarge">
-                            Etes-vous sûr de vouloir éffacer l'historique des
-                            codes USSD ?
+                            Etes-vous sûr de vouloir éffacer l'historique ?
                         </Text>
                     </Dialog.Content>
                     <Dialog.Actions>
@@ -104,7 +102,7 @@ const NavigationBar = ({
                                 clearHistory()
                                 toggleModal()
                             }}>
-                            Oui, tout éffacer
+                            Oui
                         </Button>
                     </Dialog.Actions>
                 </Dialog>
@@ -114,13 +112,13 @@ const NavigationBar = ({
                 <Dialog
                     visible={aboutModalVisible}
                     onDismiss={toggleAboutModal}>
-                    <Dialog.Title>USSDGen v1.0</Dialog.Title>
+                    <Dialog.Title>USSDGen v0.1</Dialog.Title>
                     <Dialog.Content>
                         <Text variant="bodyLarge">
                             Générateur de codes USSD des opérateurs de
                             téléphonie mobile de Côte d'Ivoire.
                         </Text>
-                        <Text variant="bodyLarge" style={{marginTop: 15}}>
+                        <Text variant="bodyMedium" style={{marginTop: 15}}>
                             Développé par eliseekn@gmail.com
                         </Text>
                     </Dialog.Content>

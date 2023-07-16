@@ -129,7 +129,7 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
                 <Dialog visible={alert} onDismiss={toggleAlert}>
                     <Dialog.Content>
                         <Text variant="bodyLarge">
-                            Etes-vous sûr de vouloir supprimer ce code USSD ?
+                            Etes-vous sûr de vouloir supprimer ce code ?
                         </Text>
                     </Dialog.Content>
                     <Dialog.Actions>
@@ -139,7 +139,7 @@ const USSDCodeItem: React.FC<Props> = ({data}) => {
                                 toggleAlert()
                                 handleDeleteUSSDCode(data.id)
                             }}>
-                            Oui, supprimer
+                            Oui
                         </Button>
                     </Dialog.Actions>
                 </Dialog>

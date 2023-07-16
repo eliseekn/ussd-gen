@@ -21,7 +21,7 @@ const ReabonnementCANAL: React.FC = () => {
         <View>
             <View>
                 <Text variant="bodyLarge" style={{marginBottom: 5}}>
-                    Numéro de carte
+                    N° carte
                 </Text>
 
                 <TextInput

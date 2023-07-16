@@ -87,25 +87,14 @@ const ServiceScreen: React.FC = () => {
     const toggleAlert = () => setAlert(!alert)
 
     const handleSetDescription = () => {
-        let description: string = ''
-
-        if (parameter.duration) {
-            description += parameter.duration + ' - '
-        }
-
-        if (parameter.account) {
-            description += parameter.account
-        }
-
-        if (parameter.amount) {
-            description += +' - ' + parameter.amount + ' FCFA'
-        }
-
-        if (parameter.contact) {
-            description += ' - ' + parameter.contact
-        }
-
-        return description
+        return [
+            parameter.duration ?? '',
+            parameter.account ?? '',
+            parameter.amount ? parameter.amount + ' FCFA' : '',
+            parameter.contact ?? '',
+        ]
+            .filter(Boolean)
+            .join('-')
     }
 
     const handleGenerateCode = (): void => {

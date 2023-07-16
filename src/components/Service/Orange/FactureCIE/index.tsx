@@ -64,7 +64,7 @@ const FactureCIE: React.FC = () => {
 
             <View>
                 <Text variant="bodyLarge" style={{marginBottom: 5}}>
-                    Numéro de compteur
+                    N° compteur
                 </Text>
 
                 <TextInput
@@ -80,7 +80,7 @@ const FactureCIE: React.FC = () => {
 
             <View style={{marginTop: 15}}>
                 <Text variant="bodyLarge" style={{marginBottom: 5}}>
-                    Montant du rechargement (Facture prépayée)
+                    Montant (service prépayé)
                 </Text>
 
                 <TextInput

@@ -20,17 +20,17 @@ const App: React.FC = () => {
                 <Stack.Screen
                     name="Home"
                     component={HomeScreen}
-                    options={{title: 'Historique des codes'}}
+                    options={{title: 'Historique'}}
                 />
                 <Stack.Screen
                     name="MobileOperator"
                     component={MobileOperatorScreen}
-                    options={{title: 'Générer un code'}}
+                    options={{title: 'Nouveau'}}
                 />
                 <Stack.Screen
                     name="Service"
                     component={ServiceScreen}
-                    options={{title: 'Générer un code'}}
+                    options={{title: 'Nouveau'}}
                 />
             </Stack.Navigator>
         </NavigationContainer>

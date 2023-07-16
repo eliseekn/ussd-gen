@@ -21,7 +21,7 @@ const FactureSODECIE: React.FC = () => {
         <View>
             <View>
                 <Text variant="bodyLarge" style={{marginBottom: 5}}>
-                    Numéro de compteur
+                    N° compteur
                 </Text>
 
                 <TextInput

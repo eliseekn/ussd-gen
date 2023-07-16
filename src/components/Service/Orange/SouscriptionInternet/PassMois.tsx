@@ -25,7 +25,7 @@ const PassMois: React.FC = () => {
     return (
         <View style={{marginTop: 15}}>
             <Text variant="bodyLarge" style={{marginBottom: 5}}>
-                Sélectionnez un montant
+                Montant
             </Text>
 
             <Button

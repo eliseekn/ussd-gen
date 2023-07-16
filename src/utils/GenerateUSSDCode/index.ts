@@ -18,7 +18,7 @@ const generateUSSDCode = (
             case 'FACTURE CIE':
             case 'FACTURE SODECIE':
                 return Facture(service, parameter)
-            case 'REABONNEMENT CANAL+':
+            case 'REABONNEMENT CANAL':
                 return ReabonnementCANAL(parameter)
         }
     }
