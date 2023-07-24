@@ -43,7 +43,9 @@ const MobileOperatorScreen: React.FC = () => {
                         justifyContent: 'space-between',
                     }}
                     onPress={toggleMobileOperatorModal}>
-                    {mobileOperator}
+                    {mobileOperator === ''
+                        ? 'Sélectionnez un opéraeur mobile'
+                        : mobileOperator}
                 </Button>
 
                 <Portal>
@@ -88,7 +90,7 @@ const MobileOperatorScreen: React.FC = () => {
                         justifyContent: 'space-between',
                     }}
                     onPress={toggleServiceModal}>
-                    {service}
+                    {service === '' ? 'Sélectionnez un service' : service}
                 </Button>
 
                 <Portal>

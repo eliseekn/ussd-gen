@@ -9,7 +9,7 @@ type Props = {
 const SearchBar: React.FC<Props> = ({onSearch, searchQuery}) => {
     return (
         <Searchbar
-            placeholder="Rechercher"
+            placeholder="Rechercher un code"
             onChangeText={onSearch}
             value={searchQuery}
             style={{marginBottom: 15, backgroundColor: 'white'}}

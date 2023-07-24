@@ -37,7 +37,9 @@ const PassMois: React.FC = () => {
                     justifyContent: 'space-between',
                 }}
                 onPress={toggleModal}>
-                {parameter.amount}
+                {parameter.amount === ''
+                    ? 'Sélectionnez un montant'
+                    : parameter.amount}
             </Button>
 
             <Portal>

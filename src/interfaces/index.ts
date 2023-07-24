@@ -19,4 +19,5 @@ export type ParameterType = {
     amount?: string
     account?: string
     contact?: string
+    mobileMoney: boolean
 }

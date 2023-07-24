@@ -68,9 +68,14 @@ const FactureCIE: React.FC = () => {
                 </Text>
 
                 <TextInput
+                    placeholder="Entrez le numéro du compteur"
+                    placeholderTextColor={MD3Colors.primary40}
                     mode="outlined"
                     outlineStyle={{borderRadius: 30, borderWidth: 0.8}}
-                    style={{backgroundColor: 'white'}}
+                    style={{
+                        backgroundColor: 'white',
+                        color: `${MD3Colors.primary40}`,
+                    }}
                     value={parameter.account}
                     onChangeText={handleSetAccount}
                     maxLength={11}
@@ -84,6 +89,7 @@ const FactureCIE: React.FC = () => {
                 </Text>
 
                 <TextInput
+                    placeholder="Entrez le montant à payer"
                     mode="outlined"
                     outlineStyle={{borderRadius: 30, borderWidth: 0.8}}
                     style={{backgroundColor: 'white'}}

@@ -8,6 +8,7 @@ import {
     RadioButton,
     TextInput,
     MD3Colors,
+    Checkbox,
 } from 'react-native-paper'
 import {useAppDispatch, useAppSelector} from '../../../../services/redux/hooks'
 import {RootState} from '../../../../services/redux/store'
@@ -37,6 +38,12 @@ const SouscriptionInternet: React.FC = () => {
 
     const handleSetContact = (value: string) => {
         dispatch(setParameter({...parameter, contact: value}))
+    }
+
+    const handleToggleMobileMoney = (): void => {
+        dispatch(
+            setParameter({...parameter, mobileMoney: !parameter.mobileMoney}),
+        )
     }
 
     return (
@@ -83,7 +90,9 @@ const SouscriptionInternet: React.FC = () => {
                         justifyContent: 'space-between',
                     }}
                     onPress={toggleModal}>
-                    {parameter.duration}
+                    {parameter.duration === ''
+                        ? 'Sélectionnez une durée'
+                        : parameter.duration}
                 </Button>
 
                 <Portal>
@@ -123,9 +132,14 @@ const SouscriptionInternet: React.FC = () => {
                     </Text>
 
                     <TextInput
+                        placeholder="Entrez le numéro de téléphone"
+                        placeholderTextColor={MD3Colors.primary40}
                         mode="outlined"
                         outlineStyle={{borderRadius: 30, borderWidth: 0.8}}
-                        style={{backgroundColor: 'white'}}
+                        style={{
+                            backgroundColor: 'white',
+                            color: `${MD3Colors.primary40}`,
+                        }}
                         value={parameter.contact as string}
                         onChangeText={(value: string) =>
                             handleSetContact(value)
@@ -133,6 +147,20 @@ const SouscriptionInternet: React.FC = () => {
                         maxLength={10}
                         keyboardType="number-pad"
                     />
+
+                    <View style={{marginTop: 15}}>
+                        <Checkbox.Item
+                            label="Payer par mobile money"
+                            labelStyle={{
+                                color: `${MD3Colors.primary40}`,
+                                fontWeight: '600',
+                            }}
+                            status={
+                                parameter.mobileMoney ? 'checked' : 'unchecked'
+                            }
+                            onPress={handleToggleMobileMoney}
+                        />
+                    </View>
                 </View>
             )}
         </View>

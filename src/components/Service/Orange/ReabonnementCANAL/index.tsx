@@ -1,6 +1,6 @@
 import React from 'react'
 import {View} from 'react-native'
-import {Text, TextInput} from 'react-native-paper'
+import {MD3Colors, Text, TextInput} from 'react-native-paper'
 import {useAppDispatch, useAppSelector} from '../../../../services/redux/hooks'
 import {RootState} from '../../../../services/redux/store'
 import {ParameterType} from '../../../../interfaces'
@@ -21,13 +21,18 @@ const ReabonnementCANAL: React.FC = () => {
         <View>
             <View>
                 <Text variant="bodyLarge" style={{marginBottom: 5}}>
-                    N° carte
+                    N° abonnement
                 </Text>
 
                 <TextInput
+                    placeholder="Entrez le numéro d'abonnement"
+                    placeholderTextColor={MD3Colors.primary40}
                     mode="outlined"
                     outlineStyle={{borderRadius: 30, borderWidth: 0.8}}
-                    style={{backgroundColor: 'white'}}
+                    style={{
+                        backgroundColor: 'white',
+                        color: `${MD3Colors.primary40}`,
+                    }}
                     value={parameter.account as string}
                     onChangeText={(value: string) => handleSetAccount(value)}
                     maxLength={14}
