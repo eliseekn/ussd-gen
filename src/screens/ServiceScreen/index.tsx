@@ -92,6 +92,7 @@ const ServiceScreen: React.FC = () => {
             parameter.account ?? '',
             parameter.amount ? parameter.amount + ' FCFA' : '',
             parameter.contact ?? '',
+            parameter.mobileMoney ? 'Mobile Money' : '',
         ]
             .filter(Boolean)
             .join('-')

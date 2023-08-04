@@ -71,7 +71,8 @@ const FactureCIE: React.FC = () => {
                     placeholder="Entrez le numéro du compteur"
                     placeholderTextColor={MD3Colors.primary40}
                     mode="outlined"
-                    outlineStyle={{borderRadius: 30, borderWidth: 0.8}}
+                    dense={true}
+                    outlineStyle={{borderRadius: 30}}
                     style={{
                         backgroundColor: 'white',
                         color: `${MD3Colors.primary40}`,
@@ -80,6 +81,12 @@ const FactureCIE: React.FC = () => {
                     onChangeText={handleSetAccount}
                     maxLength={11}
                     keyboardType="number-pad"
+                    right={
+                        <TextInput.Icon
+                            icon="dialpad"
+                            color={MD3Colors.primary40}
+                        />
+                    }
                 />
             </View>
 
@@ -91,11 +98,21 @@ const FactureCIE: React.FC = () => {
                 <TextInput
                     placeholder="Entrez le montant à payer"
                     mode="outlined"
-                    outlineStyle={{borderRadius: 30, borderWidth: 0.8}}
-                    style={{backgroundColor: 'white'}}
+                    dense={true}
+                    outlineStyle={{borderRadius: 30}}
+                    style={{
+                        backgroundColor: 'white',
+                        color: `${MD3Colors.primary40}`,
+                    }}
                     value={parameter.amount}
                     onChangeText={handleSetAmount}
                     keyboardType="number-pad"
+                    right={
+                        <TextInput.Icon
+                            icon="dialpad"
+                            color={MD3Colors.primary40}
+                        />
+                    }
                 />
             </View>
         </View>
