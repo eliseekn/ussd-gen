@@ -28,6 +28,7 @@ const SouscriptionInternet: React.FC = () => {
 
     const [modalVisible, setModalVisible] = useState<boolean>(false)
     const [alert, setAlert] = useState<boolean>(false)
+
     const toggleAlert = () => setAlert(!alert)
 
     const toggleModal = () => setModalVisible(!modalVisible)
@@ -135,7 +136,8 @@ const SouscriptionInternet: React.FC = () => {
                         placeholder="Entrez le numéro de téléphone"
                         placeholderTextColor={MD3Colors.primary40}
                         mode="outlined"
-                        outlineStyle={{borderRadius: 30, borderWidth: 0.8}}
+                        dense={true}
+                        outlineStyle={{borderRadius: 30}}
                         style={{
                             backgroundColor: 'white',
                             color: `${MD3Colors.primary40}`,
@@ -146,11 +148,21 @@ const SouscriptionInternet: React.FC = () => {
                         }
                         maxLength={10}
                         keyboardType="number-pad"
+                        right={
+                            <TextInput.Icon
+                                icon="dialpad"
+                                color={MD3Colors.primary40}
+                            />
+                        }
                     />
 
                     <View style={{marginTop: 15}}>
                         <Checkbox.Item
-                            label="Payer par mobile money"
+                            label="Payer par Mobile Money"
+                            style={{
+                                flexDirection: 'row-reverse',
+                                justifyContent: 'flex-start',
+                            }}
                             labelStyle={{
                                 color: `${MD3Colors.primary40}`,
                                 fontWeight: '600',
