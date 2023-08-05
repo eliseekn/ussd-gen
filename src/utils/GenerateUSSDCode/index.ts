@@ -3,6 +3,7 @@ import SouscriptionInternet from './Orange/SouscriptionInternet'
 import Facture from './Orange/Facture'
 import ReabonnementCANAL from './Orange/ReabonnementCANAL'
 import {ParameterType} from '../../interfaces'
+import Rechargement from './Orange/Rechargement'
 
 const generateUSSDCode = (
     mobileOperator: string,
@@ -20,6 +21,8 @@ const generateUSSDCode = (
                 return Facture(service, parameter)
             case 'REABONNEMENT CANAL':
                 return ReabonnementCANAL(parameter)
+            default:
+                return Rechargement(parameter)
         }
     }
 

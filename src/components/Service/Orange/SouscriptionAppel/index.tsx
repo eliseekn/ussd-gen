@@ -8,7 +8,6 @@ import {
     RadioButton,
     TextInput,
     MD3Colors,
-    Checkbox,
 } from 'react-native-paper'
 import {useAppDispatch, useAppSelector} from '../../../../services/redux/hooks'
 import {RootState} from '../../../../services/redux/store'
@@ -27,11 +26,17 @@ const SouscriptionAppel: React.FC = () => {
     )
 
     const [modalVisible, setModalVisible] = useState<boolean>(false)
-    const [alert, setAlert] = useState<boolean>(false)
-
-    const toggleAlert = () => setAlert(!alert)
+    const [contact, setContact] = useState<boolean>(false)
 
     const toggleModal = () => setModalVisible(!modalVisible)
+
+    const handleSetDisplayContact = (value: boolean) => {
+        setContact(value)
+
+        if (!value) {
+            dispatch(setParameter({...parameter, contact: ''}))
+        }
+    }
 
     const handleSetDuration = (value: string) => {
         dispatch(setParameter({...parameter, duration: value}))
@@ -41,43 +46,8 @@ const SouscriptionAppel: React.FC = () => {
         dispatch(setParameter({...parameter, contact: value}))
     }
 
-    const handleToggleMobileMoney = (): void => {
-        dispatch(
-            setParameter({...parameter, mobileMoney: !parameter.mobileMoney}),
-        )
-    }
-
     return (
         <View>
-            <View>
-                <Text
-                    style={{
-                        textAlign: 'right',
-                        textDecorationLine: 'underline',
-                        color: MD3Colors.primary40,
-                    }}
-                    onPress={toggleAlert}>
-                    Comment ça marche?
-                </Text>
-
-                <Portal>
-                    <Dialog visible={alert} onDismiss={toggleAlert}>
-                        <Dialog.Content>
-                            <Text variant="bodyLarge">
-                                Inscrivez le numéro de téléphone du contact à
-                                qui vous voulez payer la souscription. Dans le
-                                cas contraire, laissez le champ vide.
-                            </Text>
-                        </Dialog.Content>
-                        <Dialog.Actions>
-                            <Button onPress={() => setAlert(false)}>
-                                OK, j'ai compris
-                            </Button>
-                        </Dialog.Actions>
-                    </Dialog>
-                </Portal>
-            </View>
-
             <View>
                 <Text variant="bodyLarge" style={{marginBottom: 5}}>
                     Durée
@@ -128,53 +98,65 @@ const SouscriptionAppel: React.FC = () => {
             {parameter.duration === 'MOIS' && <PassMois />}
 
             {parameter.duration && (
-                <View style={{marginTop: 15}}>
-                    <Text variant="bodyLarge" style={{marginBottom: 5}}>
-                        Souscrire pour un contact
-                    </Text>
-
-                    <TextInput
-                        placeholder="Numéro de téléphone"
-                        placeholderTextColor={MD3Colors.primary40}
-                        mode="outlined"
-                        dense={true}
-                        outlineStyle={{borderRadius: 30}}
+                <View style={{marginTop: 5}}>
+                    <View
                         style={{
-                            backgroundColor: 'white',
-                            color: `${MD3Colors.primary40}`,
-                        }}
-                        value={parameter.contact as string}
-                        onChangeText={(value: string) =>
-                            handleSetContact(value)
-                        }
-                        maxLength={10}
-                        keyboardType="number-pad"
-                        right={
-                            <TextInput.Icon
-                                icon="dialpad"
-                                color={MD3Colors.primary40}
-                            />
-                        }
-                    />
-
-                    <View style={{marginTop: 5}}>
-                        <Checkbox.Item
-                            label="Payer par Mobile Money"
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                        }}>
+                        <RadioButton.Item
+                            label="Pour moi-même"
+                            value="first"
+                            status={!contact ? 'checked' : 'unchecked'}
+                            onPress={() => handleSetDisplayContact(false)}
                             style={{
+                                paddingHorizontal: 10,
                                 flexDirection: 'row-reverse',
-                                justifyContent: 'flex-start',
-                                paddingHorizontal: 0,
                             }}
-                            labelStyle={{
-                                color: `${MD3Colors.primary40}`,
-                                fontWeight: '600',
+                        />
+                        <RadioButton.Item
+                            label="Pour un contact"
+                            value="second"
+                            status={contact ? 'checked' : 'unchecked'}
+                            onPress={() => handleSetDisplayContact(true)}
+                            style={{
+                                paddingHorizontal: 10,
+                                flexDirection: 'row-reverse',
                             }}
-                            status={
-                                parameter.mobileMoney ? 'checked' : 'unchecked'
-                            }
-                            onPress={handleToggleMobileMoney}
                         />
                     </View>
+
+                    {contact && (
+                        <>
+                            <Text variant="bodyLarge" style={{marginBottom: 5}}>
+                                Souscrire pour un contact
+                            </Text>
+
+                            <TextInput
+                                placeholder="Numéro de téléphone"
+                                placeholderTextColor={MD3Colors.primary40}
+                                mode="outlined"
+                                dense={true}
+                                outlineStyle={{borderRadius: 30}}
+                                style={{
+                                    backgroundColor: 'white',
+                                    color: `${MD3Colors.primary40}`,
+                                }}
+                                value={parameter.contact as string}
+                                onChangeText={(value: string) =>
+                                    handleSetContact(value)
+                                }
+                                maxLength={10}
+                                keyboardType="number-pad"
+                                right={
+                                    <TextInput.Icon
+                                        icon="dialpad"
+                                        color={MD3Colors.primary40}
+                                    />
+                                }
+                            />
+                        </>
+                    )}
                 </View>
             )}
         </View>

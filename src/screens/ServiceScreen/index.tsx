@@ -16,6 +16,7 @@ import FactureCIE from '../../components/Service/Orange/FactureCIE'
 import FactureSODECIE from '../../components/Service/Orange/FactureSODECIE'
 import ReabonnementCANAL from '../../components/Service/Orange/ReabonnementCANAL'
 import {NativeStackNavigationProp} from '@react-navigation/native-stack'
+import Rechargement from '../../components/Service/Orange/Rechargement'
 
 type Props = RouteProp<RootStackParamList, 'Service'>
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Service'>
@@ -36,6 +37,8 @@ const serviceComponent = (
                 return <FactureSODECIE />
             case 'REABONNEMENT CANAL':
                 return <ReabonnementCANAL />
+            default:
+                return <Rechargement />
         }
     }
 
@@ -55,7 +58,7 @@ const handleSetHeaderTitle = (service: string): string => {
         case 'REABONNEMENT CANAL':
             return 'Réabonnement CANAL'
         default:
-            return 'Transfert d\'argent'
+            return 'Rechargement'
     }
 }
 
@@ -92,7 +95,6 @@ const ServiceScreen: React.FC = () => {
             parameter.account ?? '',
             parameter.amount ? parameter.amount + ' FCFA' : '',
             parameter.contact ?? '',
-            parameter.mobileMoney ? 'Mobile Money' : '',
         ]
             .filter(Boolean)
             .join('-')

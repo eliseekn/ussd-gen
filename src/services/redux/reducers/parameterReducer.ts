@@ -3,7 +3,7 @@ import {ParameterType} from '../../../interfaces'
 
 export const parameter = createSlice({
     name: 'parameter',
-    initialState: {mobileMoney: false} as ParameterType,
+    initialState: {} as ParameterType,
     reducers: {
         setParameter(
             state,

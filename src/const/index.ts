@@ -1,5 +1,15 @@
 const STORAGE_KEY: string = 'USSDGEN_CODES'
 const DURATION_OPTIONS: string[] = ['JOUR', 'SEMAINE', 'MOIS']
+const MOBILE_OPERATOR_OPTIONS: string[] = ['ORANGE' /*, 'MTN', 'MOOV'*/]
+
+const SERVICE_OPTIONS: string[] = [
+    'RECHARGEMENT',
+    'SOUSCRIPTION APPEL',
+    'SOUSCRIPTION INTERNET',
+    'FACTURE CIE',
+    'FACTURE SODECIE',
+    'REABONNEMENT CANAL',
+]
 
 type DataChildProps = {
     JOUR: string[]
@@ -38,16 +48,6 @@ const AMOUNT_OPTIONS: Props[] = [
             },
         ],
     },
-]
-
-const MOBILE_OPERATOR_OPTIONS: string[] = ['ORANGE' /*, 'MTN', 'MOOV'*/]
-
-const SERVICE_OPTIONS: string[] = [
-    'SOUSCRIPTION APPEL',
-    'SOUSCRIPTION INTERNET',
-    'FACTURE CIE',
-    'FACTURE SODECIE',
-    'REABONNEMENT CANAL',
 ]
 
 export {

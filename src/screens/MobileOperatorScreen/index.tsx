@@ -133,7 +133,6 @@ const MobileOperatorScreen: React.FC = () => {
                             duration: '',
                             account: '',
                             contact: '',
-                            mobileMoney: false,
                         }),
                     )
 

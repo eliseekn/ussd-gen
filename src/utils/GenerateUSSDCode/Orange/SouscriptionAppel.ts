@@ -1,12 +1,6 @@
 import {ParameterType} from '../../../interfaces'
 
 const SouscriptionAppel = (parameter: ParameterType): string => {
-    return parameter.mobileMoney
-        ? SouscriptionMobileMoney(parameter)
-        : SouscriptionClassique(parameter)
-}
-
-const SouscriptionClassique = (parameter: ParameterType): string => {
     let result: string = '#111*1*1'
 
     if (parameter.duration === 'JOUR') {
@@ -58,60 +52,6 @@ const SouscriptionClassique = (parameter: ParameterType): string => {
     }
 
     return result + `*1*1*${parameter.contact ? parameter.contact : '1'}#`
-}
-
-const SouscriptionMobileMoney = (parameter: ParameterType): string => {
-    let result: string = '#144*2*2*2*1*1'
-
-    if (parameter.duration === 'JOUR') {
-        result += '*1'
-
-        switch (parameter.amount) {
-            case '300':
-                result += '*1'
-                break
-            case '200':
-                result += '*2'
-                break
-            default:
-                result += '*3'
-                break
-        }
-    }
-
-    if (parameter.duration === 'SEMAINE') {
-        result += '*2'
-
-        switch (parameter.amount) {
-            case '1000':
-                result += '*1'
-                break
-            default:
-                result += '*2'
-                break
-        }
-    }
-
-    if (parameter.duration === 'MOIS') {
-        result += '*3'
-
-        switch (parameter.amount) {
-            case '20000':
-                result += '*1'
-                break
-            case '10000':
-                result += '*2'
-                break
-            case '5000':
-                result += '*3'
-                break
-            default:
-                result += '*4'
-                break
-        }
-    }
-
-    return result + `*1*1${parameter.contact ? parameter.contact : '1'}#`
 }
 
 export default SouscriptionAppel
