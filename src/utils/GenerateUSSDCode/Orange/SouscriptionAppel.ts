@@ -51,7 +51,7 @@ const SouscriptionAppel = (parameter: ParameterType): string => {
         }
     }
 
-    return result + `*1*1*${parameter.contact ? parameter.contact : '1'}#`
+    return result + `*1*1*${parameter.contact ? parameter.contactNumber : '1'}#`
 }
 
 export default SouscriptionAppel

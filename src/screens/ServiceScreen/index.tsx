@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {styles} from '../styles'
-import {SafeAreaView, View} from 'react-native'
+import {SafeAreaView, View, Alert} from 'react-native'
 import {useNavigation, useRoute} from '@react-navigation/native'
 import {ParameterType, RootStackParamList, USSDCodeType} from '../../interfaces'
 import type {RouteProp} from '@react-navigation/native'
@@ -89,38 +89,122 @@ const ServiceScreen: React.FC = () => {
 
     const toggleAlert = () => setAlert(!alert)
 
+    const handleSetAlertMessage = (code: string) => {
+        setAlertMessage('Code USSD : ' + code)
+        setAlert(true)
+    }
+
     const handleSetDescription = () => {
         return [
             parameter.duration ?? '',
             parameter.account ?? '',
             parameter.amount ? parameter.amount + ' FCFA' : '',
-            parameter.contact ?? '',
+            parameter.contact ? parameter.contactNumber : '',
         ]
             .filter(Boolean)
             .join('-')
     }
 
+    const handleValidateParameter = (): boolean => {
+        if (
+            [
+                'SOUSCRIPTION APPEL',
+                'SOUSCRIPTION INTERNET',
+                'RECHARGEMENT',
+            ].includes(service)
+        ) {
+            if (parameter.amount === '') {
+                Alert.alert('', 'Vous devez sélectionner un montant.')
+                return false
+            }
+
+            if (
+                parameter.contact &&
+                (parameter.contactNumber === '' ||
+                    parameter.contactNumber?.length !== 10)
+            ) {
+                Alert.alert(
+                    '',
+                    'Le numéro de téléphone du contact doit être de 10 chiffres.',
+                )
+                return false
+            }
+        }
+
+        if (['SOUSCRIPTION APPEL', 'SOUSCRIPTION INTERNET'].includes(service)) {
+            if (parameter.duration === '') {
+                Alert.alert('', 'Vous devez sélectionner une durée.')
+                return false
+            }
+        }
+
+        if (
+            ['FACTURE CIE', 'FACTURE SODECIE', 'REABONNEMENT CANAL'].includes(
+                service,
+            )
+        ) {
+            if (parameter.account === '') {
+                Alert.alert('', 'Vous devez numéro de compte.')
+                return false
+            } else {
+                if (service === 'FACTURE CIE') {
+                    Alert.alert(
+                        '',
+                        'Le numéro du compteur doit être de 11 chiffres.',
+                    )
+                    return false
+                }
+
+                if (service === 'FACTURE SODECIE') {
+                    Alert.alert(
+                        '',
+                        'Le numéro du compteur doit être de 9 chiffres.',
+                    )
+                    return false
+                }
+
+                if (service === 'REABONNEMENT CANAL') {
+                    Alert.alert(
+                        '',
+                        'Le numéro de l\'abonnement doit être de 14 chiffres.',
+                    )
+                    return false
+                }
+            }
+        }
+
+        if (service === 'FACTURE CIE' && parameter.prepaidBill) {
+            if (parameter.amount === '') {
+                Alert.alert('', 'Vous devez sélectionner un montant.')
+                return false
+            }
+        }
+
+        return true
+    }
+
     const handleGenerateCode = (): void => {
-        const USSDCode: string = generateUSSDCode(
-            mobileOperator,
-            service,
-            parameter,
-        )
+        if (handleValidateParameter()) {
+            const USSDCode: string = generateUSSDCode(
+                mobileOperator,
+                service,
+                parameter,
+            )
 
-        dispatch(incrementUSSDCodeId())
+            dispatch(incrementUSSDCodeId())
 
-        dispatch(
-            addUSSDCode({
-                id: USSDCodeId,
-                mobileOperator: mobileOperator,
-                service: service,
-                value: USSDCode,
-                description: handleSetDescription(),
-            } as USSDCodeType),
-        )
+            dispatch(
+                addUSSDCode({
+                    id: USSDCodeId,
+                    mobileOperator: mobileOperator,
+                    service: service,
+                    value: USSDCode,
+                    description: handleSetDescription(),
+                } as USSDCodeType),
+            )
 
-        setAlertMessage('Code USSD : ' + USSDCode)
-        setAlert(true)
+            handleSetAlertMessage(USSDCode)
+        }
     }
 
     const handleCopyCodeToPhone = async (): Promise<void> => {

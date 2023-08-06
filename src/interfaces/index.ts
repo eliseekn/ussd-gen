@@ -18,5 +18,7 @@ export type ParameterType = {
     duration?: string
     amount?: string
     account?: string
-    contact?: string
+    contact: boolean
+    contactNumber?: string
+    prepaidBill: boolean
 }

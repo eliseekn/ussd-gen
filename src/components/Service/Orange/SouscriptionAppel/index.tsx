@@ -34,7 +34,9 @@ const SouscriptionAppel: React.FC = () => {
         setContact(value)
 
         if (!value) {
-            dispatch(setParameter({...parameter, contact: ''}))
+            dispatch(
+                setParameter({...parameter, contact: false, contactNumber: ''}),
+            )
         }
     }
 
@@ -43,7 +45,9 @@ const SouscriptionAppel: React.FC = () => {
     }
 
     const handleSetContact = (value: string) => {
-        dispatch(setParameter({...parameter, contact: value}))
+        dispatch(
+            setParameter({...parameter, contact: true, contactNumber: value}),
+        )
     }
 
     return (
@@ -142,7 +146,7 @@ const SouscriptionAppel: React.FC = () => {
                                     backgroundColor: 'white',
                                     color: `${MD3Colors.primary40}`,
                                 }}
-                                value={parameter.contact as string}
+                                value={parameter.contactNumber as string}
                                 onChangeText={(value: string) =>
                                     handleSetContact(value)
                                 }
