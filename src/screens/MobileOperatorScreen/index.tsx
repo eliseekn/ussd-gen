@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {styles} from '../styles'
-import {SafeAreaView, View} from 'react-native'
+import {SafeAreaView, View, Alert} from 'react-native'
 import {Button, Text, Dialog, Portal, RadioButton} from 'react-native-paper'
 import {NativeStackNavigationProp} from '@react-navigation/native-stack'
 import {useNavigation} from '@react-navigation/native'
@@ -27,6 +27,35 @@ const MobileOperatorScreen: React.FC = () => {
     const toggleServiceModal = () =>
         setServiceModalVisible(!serviceModalVisible)
 
+    const handleNavigateToServiceScreen = (): void => {
+        if (mobileOperator === '') {
+            return Alert.alert(
+                '',
+                'Vous devez sélectionnez un opérateur mobile.',
+            )
+        }
+
+        if (service === '') {
+            return Alert.alert('', 'Vous devez sélectionnez un service.')
+        }
+
+        dispatch(
+            setParameter({
+                amount: '',
+                duration: '',
+                account: '',
+                contactNumber: '',
+                contact: false,
+                prepaidBill: false,
+            }),
+        )
+
+        navigation.navigate('Service', {
+            mobileOperator: mobileOperator,
+            service: service,
+        })
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View>
@@ -44,7 +73,7 @@ const MobileOperatorScreen: React.FC = () => {
                     }}
                     onPress={toggleMobileOperatorModal}>
                     {mobileOperator === ''
-                        ? 'Sélectionnez un opéraeur mobile'
+                        ? 'Sélectionnez un opérateur mobile'
                         : mobileOperator}
                 </Button>
 
@@ -126,23 +155,7 @@ const MobileOperatorScreen: React.FC = () => {
                 icon="arrow-right"
                 contentStyle={{flexDirection: 'row-reverse'}}
                 uppercase={true}
-                onPress={() => {
-                    dispatch(
-                        setParameter({
-                            amount: '',
-                            duration: '',
-                            account: '',
-                            contactNumber: '',
-                            contact: false,
-                            prepaidBill: false,
-                        }),
-                    )
-
-                    navigation.navigate('Service', {
-                        mobileOperator: mobileOperator,
-                        service: service,
-                    })
-                }}>
+                onPress={handleNavigateToServiceScreen}>
                 Suivant
             </Button>
         </SafeAreaView>

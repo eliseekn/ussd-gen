@@ -132,7 +132,7 @@ const NavigationBar = ({
                                     'https://github.com/eliseekn/ussd-gen',
                                 )
                             }>
-                            Github
+                            Code source
                         </Button>
                     </Dialog.Actions>
                 </Dialog>

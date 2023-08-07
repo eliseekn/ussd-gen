@@ -21,19 +21,14 @@ const Rechargement: React.FC = () => {
         (state: RootState) => state.parameter,
     )
 
-    const [contact, setContact] = useState<boolean>(false)
     const [alert, setAlert] = useState<boolean>(false)
 
     const toggleAlert = () => setAlert(!alert)
 
     const handleSetDisplayContact = (value: boolean) => {
-        setContact(value)
-
-        if (!value) {
-            dispatch(
-                setParameter({...parameter, contact: false, contactNumber: ''}),
-            )
-        }
+        dispatch(
+            setParameter({...parameter, contact: value, contactNumber: ''}),
+        )
     }
 
     const handleSetAmount = (value: string): void => {
@@ -113,7 +108,7 @@ const Rechargement: React.FC = () => {
                     <RadioButton.Item
                         label="Pour moi-même"
                         value="first"
-                        status={!contact ? 'checked' : 'unchecked'}
+                        status={!parameter.contact ? 'checked' : 'unchecked'}
                         onPress={() => handleSetDisplayContact(false)}
                         style={{
                             paddingHorizontal: 10,
@@ -123,7 +118,7 @@ const Rechargement: React.FC = () => {
                     <RadioButton.Item
                         label="Pour un contact"
                         value="second"
-                        status={contact ? 'checked' : 'unchecked'}
+                        status={parameter?.contact ? 'checked' : 'unchecked'}
                         onPress={() => handleSetDisplayContact(true)}
                         style={{
                             paddingHorizontal: 10,
@@ -132,7 +127,7 @@ const Rechargement: React.FC = () => {
                     />
                 </View>
 
-                {contact && (
+                {parameter?.contact && (
                     <>
                         <Text variant="bodyLarge" style={{marginBottom: 5}}>
                             Recharger un contact

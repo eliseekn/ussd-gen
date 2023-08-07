@@ -26,18 +26,13 @@ const SouscriptionInternet: React.FC = () => {
     )
 
     const [modalVisible, setModalVisible] = useState<boolean>(false)
-    const [contact, setContact] = useState<boolean>(false)
 
     const toggleModal = () => setModalVisible(!modalVisible)
 
     const handleSetDisplayContact = (value: boolean) => {
-        setContact(value)
-
-        if (!value) {
-            dispatch(
-                setParameter({...parameter, contact: false, contactNumber: ''}),
-            )
-        }
+        dispatch(
+            setParameter({...parameter, contact: value, contactNumber: ''}),
+        )
     }
 
     const handleSetDuration = (value: string) => {
@@ -111,7 +106,9 @@ const SouscriptionInternet: React.FC = () => {
                         <RadioButton.Item
                             label="Pour moi-même"
                             value="first"
-                            status={!contact ? 'checked' : 'unchecked'}
+                            status={
+                                !parameter?.contact ? 'checked' : 'unchecked'
+                            }
                             onPress={() => handleSetDisplayContact(false)}
                             style={{
                                 paddingHorizontal: 10,
@@ -121,7 +118,9 @@ const SouscriptionInternet: React.FC = () => {
                         <RadioButton.Item
                             label="Pour un contact"
                             value="second"
-                            status={contact ? 'checked' : 'unchecked'}
+                            status={
+                                parameter?.contact ? 'checked' : 'unchecked'
+                            }
                             onPress={() => handleSetDisplayContact(true)}
                             style={{
                                 paddingHorizontal: 10,
@@ -130,7 +129,7 @@ const SouscriptionInternet: React.FC = () => {
                         />
                     </View>
 
-                    {contact && (
+                    {parameter?.contact && (
                         <>
                             <Text variant="bodyLarge" style={{marginBottom: 5}}>
                                 Souscrire pour un contact

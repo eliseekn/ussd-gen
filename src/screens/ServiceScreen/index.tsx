@@ -94,7 +94,7 @@ const ServiceScreen: React.FC = () => {
         setAlert(true)
     }
 
-    const handleSetDescription = () => {
+    const handleSetDescription = (): string => {
         return [
             parameter.duration ?? '',
             parameter.account ?? '',
@@ -106,36 +106,41 @@ const ServiceScreen: React.FC = () => {
     }
 
     const handleValidateParameter = (): boolean => {
+        if (service === 'RECHARGEMENT' && parameter.amount === '') {
+            Alert.alert('', 'Vous devez entrer un montant.')
+            return false
+        }
+
+        if (
+            ['SOUSCRIPTION APPEL', 'SOUSCRIPTION INTERNET'].includes(service) &&
+            parameter.duration === ''
+        ) {
+            Alert.alert('', 'Vous devez sélectionner une durée.')
+            return false
+        }
+
+        if (
+            ['SOUSCRIPTION APPEL', 'SOUSCRIPTION INTERNET'].includes(service) &&
+            parameter.amount === ''
+        ) {
+            Alert.alert('', 'Vous devez sélectionner un montant.')
+            return false
+        }
+
         if (
             [
                 'SOUSCRIPTION APPEL',
                 'SOUSCRIPTION INTERNET',
                 'RECHARGEMENT',
-            ].includes(service)
+            ].includes(service) &&
+            parameter.contact &&
+            parameter.contactNumber?.length !== 10
         ) {
-            if (parameter.amount === '') {
-                Alert.alert('', 'Vous devez sélectionner un montant.')
-                return false
-            }
-
-            if (
-                parameter.contact &&
-                (parameter.contactNumber === '' ||
-                    parameter.contactNumber?.length !== 10)
-            ) {
-                Alert.alert(
-                    '',
-                    'Le numéro de téléphone du contact doit être de 10 chiffres.',
-                )
-                return false
-            }
-        }
-
-        if (['SOUSCRIPTION APPEL', 'SOUSCRIPTION INTERNET'].includes(service)) {
-            if (parameter.duration === '') {
-                Alert.alert('', 'Vous devez sélectionner une durée.')
-                return false
-            }
+            Alert.alert(
+                '',
+                'Le numéro de téléphone du contact doit être de 10 chiffres.',
+            )
+            return false
         }
 
         if (
@@ -144,7 +149,14 @@ const ServiceScreen: React.FC = () => {
             )
         ) {
             if (parameter.account === '') {
-                Alert.alert('', 'Vous devez numéro de compte.')
+                Alert.alert(
+                    '',
+                    `Vous devez entrer le numéro${
+                        service === 'REABONNEMENT CANAL'
+                            ? ' d\'abonnement'
+                            : ' du compteur'
+                    }.`,
+                )
                 return false
             } else {
                 if (service === 'FACTURE CIE') {
@@ -166,18 +178,20 @@ const ServiceScreen: React.FC = () => {
                 if (service === 'REABONNEMENT CANAL') {
                     Alert.alert(
                         '',
-                        'Le numéro de l\'abonnement doit être de 14 chiffres.',
+                        'Le numéro d\'abonnement doit être de 14 chiffres.',
                     )
                     return false
                 }
             }
         }
 
-        if (service === 'FACTURE CIE' && parameter.prepaidBill) {
-            if (parameter.amount === '') {
-                Alert.alert('', 'Vous devez sélectionner un montant.')
-                return false
-            }
+        if (
+            service === 'FACTURE CIE' &&
+            parameter.prepaidBill &&
+            parameter.amount === ''
+        ) {
+            Alert.alert('', 'Vous devez entrer un montant.')
+            return false
         }
 
         return true

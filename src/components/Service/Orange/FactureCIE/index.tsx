@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {View} from 'react-native'
 import {MD3Colors, RadioButton, Text, TextInput} from 'react-native-paper'
 import {useAppDispatch, useAppSelector} from '../../../../services/redux/hooks'
@@ -13,16 +13,8 @@ const FactureCIE: React.FC = () => {
         (state: RootState) => state.parameter,
     )
 
-    const [prepaid, setPrepaid] = useState<boolean>(false)
-
     const handleSetDisplayPrepaid = (value: boolean) => {
-        setPrepaid(value)
-
-        if (!value) {
-            dispatch(
-                setParameter({...parameter, prepaidBill: false, amount: ''}),
-            )
-        }
+        dispatch(setParameter({...parameter, prepaidBill: value, amount: ''}))
     }
 
     const handleSetAccount = (value: string): void => {
@@ -71,7 +63,7 @@ const FactureCIE: React.FC = () => {
                 <RadioButton.Item
                     label="Facture post-payée"
                     value="first"
-                    status={!prepaid ? 'checked' : 'unchecked'}
+                    status={!parameter?.prepaidBill ? 'checked' : 'unchecked'}
                     onPress={() => handleSetDisplayPrepaid(false)}
                     style={{
                         paddingHorizontal: 10,
@@ -81,7 +73,7 @@ const FactureCIE: React.FC = () => {
                 <RadioButton.Item
                     label="Facture pré-payée"
                     value="second"
-                    status={prepaid ? 'checked' : 'unchecked'}
+                    status={parameter?.prepaidBill ? 'checked' : 'unchecked'}
                     onPress={() => handleSetDisplayPrepaid(true)}
                     style={{
                         paddingHorizontal: 10,
@@ -90,7 +82,7 @@ const FactureCIE: React.FC = () => {
                 />
             </View>
 
-            {prepaid && (
+            {parameter?.prepaidBill && (
                 <>
                     <Text variant="bodyLarge" style={{marginBottom: 5}}>
                         Montant
