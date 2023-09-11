@@ -159,7 +159,10 @@ const ServiceScreen: React.FC = () => {
                 )
                 return false
             } else {
-                if (service === 'FACTURE CIE') {
+                if (
+                    service === 'FACTURE CIE' &&
+                    parameter.account?.length !== 11
+                ) {
                     Alert.alert(
                         '',
                         'Le numéro du compteur doit être de 11 chiffres.',
@@ -167,7 +170,10 @@ const ServiceScreen: React.FC = () => {
                     return false
                 }
 
-                if (service === 'FACTURE SODECIE') {
+                if (
+                    service === 'FACTURE SODECIE' &&
+                    parameter.account?.length !== 9
+                ) {
                     Alert.alert(
                         '',
                         'Le numéro du compteur doit être de 9 chiffres.',
@@ -175,7 +181,10 @@ const ServiceScreen: React.FC = () => {
                     return false
                 }
 
-                if (service === 'REABONNEMENT CANAL') {
+                if (
+                    service === 'REABONNEMENT CANAL' &&
+                    parameter.account?.length !== 14
+                ) {
                     Alert.alert(
                         '',
                         'Le numéro d\'abonnement doit être de 14 chiffres.',
