@@ -4,7 +4,7 @@ const SouscriptionAppel = (parameter: ParameterType): string => {
     let result: string = '#111*1*1'
 
     if (parameter.duration === 'JOUR') {
-        result += '*1'
+        result += '*2'
 
         switch (parameter.amount) {
             case '300':
@@ -20,7 +20,7 @@ const SouscriptionAppel = (parameter: ParameterType): string => {
     }
 
     if (parameter.duration === 'SEMAINE') {
-        result += '*2'
+        result += '*3'
 
         switch (parameter.amount) {
             case '1000':
@@ -33,7 +33,7 @@ const SouscriptionAppel = (parameter: ParameterType): string => {
     }
 
     if (parameter.duration === 'MOIS') {
-        result += '*3'
+        result += '*4'
 
         switch (parameter.amount) {
             case '20000':
